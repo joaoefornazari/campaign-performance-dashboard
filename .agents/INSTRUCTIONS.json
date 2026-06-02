@@ -1,0 +1,133 @@
+{
+    "tests": {
+        "automated-tests": "always",
+        "required-types": ["unit", "integration"],
+        "frontend-tests": {
+            "required": true,
+            "framework": "vitest"
+        },
+        "backend-tests": {
+            "required": true,
+            "framework": "phpunit"
+        },
+        "test-before-implementation": false
+    },
+    "tech-stack": {
+        "frontend": {
+            "pattern": "modular",
+            "state-management": "local-only",
+            "dom-handling": "no-inline-js",
+            "file-structure": [
+                "components/",
+                "services/",
+                "utils/"
+            ],
+            "forbidden": ["jquery", "inline-event-handlers"]
+        },
+        "backend": {
+            "framework": {
+                "name": "Laravel",
+                "version": "11.x"
+            },
+            "language": {
+                "name": "php",
+                "version": "8.3.x"
+            },
+            "database": {
+                "language": "SQL",
+                "dbms": {
+                    "name": "Postgres",
+                    "version": "16.x"
+                },
+                "normalization": "3NF",
+                "constraints": ["foreign-keys", "unique", "not-null"],
+                "migrations": "always",
+                "seeding": "required-for-dev",
+                "naming-convention": "snake_case"
+            },
+            "error-handling": {
+                "try-catch-blocks": "always",
+                "format": "consistent-json",
+                "no-stack-traces-in-production": true
+            },
+            "logging": {
+                "required": true,
+                "level": ["error", "warning"]
+            },
+            "ensure-backend-techs-are-compatible-between-each-other": true           
+        }
+    },
+    "architecture": {
+        "type": "monolith",
+        "backend-structure": [
+            "controllers",
+            "services",
+            "repositories",
+            "models",
+            "request-validation"
+        ],
+        "forbidden": ["microservices", "serverless-fragmentation"]
+    },
+    "security": {
+        "owasp": {
+            "prevent": [
+                "xss",
+                "csrf",
+                "sql-injection",
+                "mass-assignment"
+            ]
+        },
+        "input-validation": "always",
+        "output-escaping": "always",
+        "auth": {
+            "hash-passwords": true,
+            "use-laravel-auth": true
+        },
+        "env-variables": {
+            "expose-on-client": "never",
+            "hardcoded-values-out-of-env": "never"
+        },
+        "sudo": {
+            "allowed": false,
+            "if-required": "stop-and-explain",
+            "output-instructions": true
+        }
+    },
+    "planning": {
+        "required": true,
+        "ask-for-approval": true,
+        "plan-structure": [
+            "requirements-breakdown",
+            "data-model",
+            "api-design",
+            "frontend-structure",
+            "test-strategy",
+            "security-considerations"
+        ]
+    },
+    "interaction": {
+        "ask-when-uncertain": true,
+        "no-assumptions": true
+    },
+    "other": {
+        "definition-of-done": [
+            "tests-written-and-passing",
+            "code-follows-best-practices",
+            "no-security-violations",
+            "plan-fully-implemented"
+        ],
+        "refactoring": {
+            "required-after-implementation": true,
+            "goals": [
+                "reduce-duplication",
+                "improve-readability"
+            ]
+        },
+        "development-guidelines": [
+            "HTML5 best practices",
+            "CSS3 best practices",
+            "Laravel best practices"
+        ],        
+        "execute-multiple-tasks-at-once": false
+    }
+}
