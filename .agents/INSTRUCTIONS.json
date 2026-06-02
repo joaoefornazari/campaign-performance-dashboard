@@ -37,7 +37,7 @@
                 "language": "SQL",
                 "dbms": {
                     "name": "Postgres",
-                    "version": "16.x"
+                    "version": "18.x"
                 },
                 "normalization": "3NF",
                 "constraints": ["foreign-keys", "unique", "not-null"],
