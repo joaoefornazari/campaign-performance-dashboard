@@ -1,0 +1,7 @@
+{
+    "rules": "./INSTRUCTIONS.json",
+    "run": {
+        "task": "[2026-06-02T17:38:02]",
+        "source": "./TASKS.md"
+    }
+}
