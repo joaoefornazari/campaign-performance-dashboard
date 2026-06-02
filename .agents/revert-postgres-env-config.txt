@@ -1,0 +1,19 @@
+1. Editar /var/lib/pgsql/data/pg_hba.conf
+Trocar a linha IPv4 de ident para scram-sha-256:
+# Linha atual:
+host    all             all             127.0.0.1/32            ident
+# Substituir por:
+host    all             all             127.0.0.1/32            scram-sha-256
+Via comando:
+sudo sed -i 's|host    all             all             127.0.0.1/32            ident|host    all             all             127.0.0.1/32            scram-sha-256|' /var/lib/pgsql/data/pg_hba.conf
+2. Recarregar config do PostgreSQL:
+sudo systemctl reload postgresql
+3. Definir senha para o role que vai conectar (ex: postgres ou skyhouse_admin):
+sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+4. Reverter .env para conexão TCP padrão:
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=skyhouse
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
