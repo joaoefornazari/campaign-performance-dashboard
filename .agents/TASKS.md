@@ -128,7 +128,7 @@ Add the Laravel relationship methods to Campaigns and Users models so web app ca
 
 Add a "deleted_at" timestamp attribute to **users**, **campaigns** and **platforms** database entities that will signal that the register was deleted.
 
-## TASK [2026-06-02T19:19:25]: Admin and Standard roles
+## TASK [2026-06-02T19:19:25]: Admin and Standard roles [DONE]
 
 Create two user roles: Admin and Standard. Admin can hard-delete registers from database; Standard cannot.
 
