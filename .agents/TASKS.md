@@ -132,7 +132,7 @@ Add a "deleted_at" timestamp attribute to **users**, **campaigns** and **platfor
 
 Create two user roles: Admin and Standard. Admin can hard-delete registers from database; Standard cannot.
 
-## TASK []: Users API endpoints
+## TASK [2026-06-02T19:31:17]: Users API endpoints
 
 Create endpoints that do the following:
 - POST create user
