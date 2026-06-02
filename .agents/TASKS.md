@@ -132,7 +132,7 @@ Add a "deleted_at" timestamp attribute to **users**, **campaigns** and **platfor
 
 Create two user roles: Admin and Standard. Admin can hard-delete registers from database; Standard cannot.
 
-## TASK [2026-06-02T19:31:17]: Users API endpoints
+## TASK [2026-06-02T19:31:17]: Users API endpoints [DONE]
 
 Create endpoints that do the following:
 
@@ -158,7 +158,6 @@ Create endpoints that do the following:
 
 ### CAMPAIGNS
 
-Create endpoints that do the following:
 - POST create campaign
 - GET a single campaign by id
 - GET all campaign (filter by platform ID or user ID (use query params), limit and offset as query params, allow a search query param too)
@@ -167,4 +166,6 @@ Create endpoints that do the following:
 - DELETE hard-delete a campaign by its ID (requires user to be admin)
 - PUT restore a soft-deleted campaign by its ID
 
-## 
+## TASK [2026-06-02T19:31:17]: Login and logout
+
+Create an API user login endpoint and a user logout endpoint. Login must return user's email and name. Logout must have a success message and redirect user to login page (create an empty login page too).
