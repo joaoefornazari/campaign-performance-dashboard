@@ -141,6 +141,7 @@ Create endpoints that do the following:
 - PUT update user
 - DELETE soft-delete a user
 - DELETE hard-delete a user (requires user to be admin)
+- PUT restore a soft-deleted user by its ID
 
 ## TASK []: Platform API endpoints
 
@@ -151,6 +152,7 @@ Create endpoints that do the following:
 - PUT update platform
 - DELETE soft-delete a platform
 - DELETE hard-delete a platform (requires user to be admin)
+- PUT restore a soft-deleted platform by its ID
 
 ## TASK []: Campaigns API endpoints
 
@@ -161,5 +163,6 @@ Create endpoints that do the following:
 - PUT update campaign
 - DELETE soft-delete a campaign by its ID
 - DELETE hard-delete a campaign by its ID (requires user to be admin)
+- PUT restore a soft-deleted campaign by its ID
 
 ## 
