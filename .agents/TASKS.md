@@ -123,3 +123,43 @@ Add to database the following tables:
 ```
 
 Add the Laravel relationship methods to Campaigns and Users models so web app can use Laravel's built-in techs to work with relationships.
+
+## TASK []: Soft-Delete flags
+
+Add a "deleted_at" timestamp attribute to **users**, **campaigns** and **platforms** database entities that will signal that the register was deleted.
+
+## TASK []: Admin and Standard roles
+
+Create two user roles: Admin and Standard. Admin can hard-delete registers from database; Standard cannot.
+
+## TASK []: Users API endpoints
+
+Create endpoints that do the following:
+- POST create user
+- GET a single user by id
+- GET all users (limit and offset as query params, allow a search query param too)
+- PUT update user
+- DELETE soft-delete a user
+- DELETE hard-delete a user (requires user to be admin)
+
+## TASK []: Platform API endpoints
+
+Create endpoints that do the following:
+- POST create platform
+- GET a single platform by id
+- GET all platforms
+- PUT update platform
+- DELETE soft-delete a platform
+- DELETE hard-delete a platform (requires user to be admin)
+
+## TASK []: Campaigns API endpoints
+
+Create endpoints that do the following:
+- POST create campaign
+- GET a single campaign by id
+- GET all campaign (filter by platform ID or user ID (use query params), limit and offset as query params, allow a search query param too)
+- PUT update campaign
+- DELETE soft-delete a campaign by its ID
+- DELETE hard-delete a campaign by its ID (requires user to be admin)
+
+## 
