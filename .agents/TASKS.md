@@ -101,3 +101,25 @@ Add to database the following tables:
 	}
 ]
 ```
+
+## TASK [2026-06-02T18:37:19]: User and campaigns
+
+1. Add a foreign key to campaigns:
+
+```json
+{
+	"name": "user_id",
+	"type": "integer",
+	"settings": {
+		"foreign-key": true,
+		"references": {
+			"table": "users",
+			"primary-key": "id",
+			"on-update": "cascade",
+			"on-delete": "cascade"
+		}
+	}
+}
+```
+
+Add the Laravel relationship methods to Campaigns and Users models so web app can use Laravel's built-in techs to work with relationships.
