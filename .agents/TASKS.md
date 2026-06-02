@@ -124,7 +124,7 @@ Add to database the following tables:
 
 Add the Laravel relationship methods to Campaigns and Users models so web app can use Laravel's built-in techs to work with relationships.
 
-## TASK []: Soft-Delete flags
+## TASK [2026-06-02T19:08:03]: Soft-Delete flags
 
 Add a "deleted_at" timestamp attribute to **users**, **campaigns** and **platforms** database entities that will signal that the register was deleted.
 
