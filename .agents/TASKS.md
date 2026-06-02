@@ -135,6 +135,9 @@ Create two user roles: Admin and Standard. Admin can hard-delete registers from 
 ## TASK [2026-06-02T19:31:17]: Users API endpoints
 
 Create endpoints that do the following:
+
+### USERS
+
 - POST create user
 - GET a single user by id
 - GET all users (limit and offset as query params, allow a search query param too)
@@ -143,9 +146,8 @@ Create endpoints that do the following:
 - DELETE hard-delete a user (requires user to be admin)
 - PUT restore a soft-deleted user by its ID
 
-## TASK []: Platform API endpoints
+### PLATFORMS
 
-Create endpoints that do the following:
 - POST create platform
 - GET a single platform by id
 - GET all platforms
@@ -154,7 +156,7 @@ Create endpoints that do the following:
 - DELETE hard-delete a platform (requires user to be admin)
 - PUT restore a soft-deleted platform by its ID
 
-## TASK []: Campaigns API endpoints
+### CAMPAIGNS
 
 Create endpoints that do the following:
 - POST create campaign
