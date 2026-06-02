@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Campaign;
 use App\Models\Platform;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -33,6 +34,7 @@ class CampaignDatabaseTest extends TestCase
         $this->assertContains('revenue', $columns);
         $this->assertContains('conversions', $columns);
         $this->assertContains('platform_id', $columns);
+        $this->assertContains('user_id', $columns);
         $this->assertContains('created_at', $columns);
         $this->assertContains('updated_at', $columns);
     }
@@ -46,6 +48,17 @@ class CampaignDatabaseTest extends TestCase
 
         $this->expectException(\Illuminate\Database\QueryException::class);
         Campaign::factory()->create(['platform_id' => 99999]);
+    }
+
+    public function test_campaign_foreign_key_references_user(): void
+    {
+        $user = User::factory()->create();
+        $campaign = Campaign::factory()->create(['user_id' => $user->id]);
+
+        $this->assertEquals($user->id, $campaign->user_id);
+
+        $this->expectException(\Illuminate\Database\QueryException::class);
+        Campaign::factory()->create(['user_id' => 99999]);
     }
 
     public function test_name_min_length_check_on_campaigns(): void

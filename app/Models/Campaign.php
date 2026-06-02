@@ -16,6 +16,7 @@ class Campaign extends Model
         'revenue',
         'conversions',
         'platform_id',
+        'user_id',
     ];
 
     protected function casts(): array
@@ -30,5 +31,10 @@ class Campaign extends Model
     public function platform(): BelongsTo
     {
         return $this->belongsTo(Platform::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
