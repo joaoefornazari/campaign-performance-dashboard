@@ -1,10 +1,10 @@
 # TASKS
 
-## TASK [2026-06-02T15:00:28]: Bootstrap project
+## TASK [2026-06-02T15:00:28]: Bootstrap project [DONE]
 
 Bootstrap the project. (Read `.agents/INSTRUCTIONS.json` and follow its instruction on the task execution).
 
-## TASK [2026-06-02T17:38:02]: Database structure
+## TASK [2026-06-02T17:38:02]: Database structure [DONE]
 
 Add to database the following tables:
 
@@ -102,7 +102,7 @@ Add to database the following tables:
 ]
 ```
 
-## TASK [2026-06-02T18:37:19]: User and campaigns
+## TASK [2026-06-02T18:37:19]: User and campaigns [DONE]
 
 1. Add a foreign key to campaigns:
 
@@ -124,7 +124,7 @@ Add to database the following tables:
 
 Add the Laravel relationship methods to Campaigns and Users models so web app can use Laravel's built-in techs to work with relationships.
 
-## TASK [2026-06-02T19:08:03]: Soft-Delete flags
+## TASK [2026-06-02T19:08:03]: Soft-Delete flags [DONE]
 
 Add a "deleted_at" timestamp attribute to **users**, **campaigns** and **platforms** database entities that will signal that the register was deleted.
 
