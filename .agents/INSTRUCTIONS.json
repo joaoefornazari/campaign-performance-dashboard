@@ -60,11 +60,26 @@
     "architecture": {
         "type": "monolith",
         "backend-structure": [
-            "controllers",
-            "services",
-            "repositories",
-            "models",
-            "request-validation"
+            {
+                "name": "controllers"
+            },
+            {
+                "name": "services"
+            },
+            {
+                "name": "repositories"
+            },
+            {
+                "name": "models"
+            },
+            {
+                "name": "requests",
+                "settings": {
+                    "validation": true,
+                    "input-whitelist": true,
+                    "http-500-for-every-request-error": false
+                }
+            }
         ],
         "forbidden": ["microservices", "serverless-fragmentation"]
     },
