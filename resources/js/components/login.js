@@ -2,6 +2,7 @@ import { login } from '../services/authService.js';
 import { storage } from '../utils/storage.js';
 
 export function initLoginForm() {
+    storage.clear();
     if (storage.getToken()) {
         window.location.href = '/dashboard';
         return;

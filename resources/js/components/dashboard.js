@@ -1,4 +1,5 @@
 import { storage } from '../utils/storage.js';
+import { logout } from '../services/authService.js';
 
 export function initDashboard() {
     const token = storage.getToken();
@@ -77,6 +78,19 @@ export function initDashboard() {
     const filterInput = document.getElementById('min-roas-filter');
     if (filterInput) {
         filterInput.addEventListener('input', applyRoasFilter);
+    }
+
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await logout(token);
+            } catch {
+                // ignore backend errors, still clear local state
+            }
+            storage.clear();
+            window.location.href = '/login';
+        });
     }
 
     loadCampaigns(token);

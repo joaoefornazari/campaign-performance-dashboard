@@ -31,6 +31,47 @@ describe('Auth API', () => {
       .expect(401);
   });
 
+  it('should logout with valid token', async () => {
+    const loginRes = await request(server)
+      .post('/api/login')
+      .send({ email: testUser.email, password: testUser.password })
+      .expect(200);
+
+    const token = loginRes.body.token;
+
+    const logoutRes = await request(server)
+      .post('/api/logout')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(logoutRes.body).toEqual({ message: 'Logged out successfully' });
+  });
+
+  it('should reject reused token after logout', async () => {
+    const loginRes = await request(server)
+      .post('/api/login')
+      .send({ email: testUser.email, password: testUser.password })
+      .expect(200);
+
+    const token = loginRes.body.token;
+
+    await request(server)
+      .post('/api/logout')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    await request(server)
+      .get('/api/users')
+      .set('Authorization', `Bearer ${token}`)
+      .expect(401);
+  });
+
+  it('should reject logout without token', async () => {
+    await request(server)
+      .post('/api/logout')
+      .expect(401);
+  });
+
   it('should rate limit after 5 login attempts per minute', async () => {
     const maxAttempts = 15;
     let rateLimited = false;
