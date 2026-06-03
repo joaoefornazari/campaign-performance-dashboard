@@ -12,6 +12,10 @@ export class PlatformService {
     return await this.platformRepository.findById(id);
   }
 
+  async findByName(name: string): Promise<Platform | null> {
+    return await this.platformRepository.findByName(name);
+  }
+
   async findAllPaginated(params: {
     search?: string;
     per_page?: number;

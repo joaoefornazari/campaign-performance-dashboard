@@ -7,6 +7,8 @@ import {
 } from '../validations/schemas.js';
 import { adminGate } from '../middlewares/AdminGate.js';
 
+const EXPECTED_CSV_HEADERS = ['campaign_id', 'campaign_name', 'spend', 'revenue', 'conversions', 'platform'];
+
 export class CampaignController {
     constructor(private readonly service = new CampaignService()) { }
 
@@ -61,6 +63,25 @@ export class CampaignController {
             const restored = await this.service.restore(Number(req.params.id));
             if (!restored) return res.status(404).json({ message: 'Campaign not found' });
             return res.json(restored);
+        },
+    ];
+
+    importCsv = [
+        async (req: Request, res: Response) => {
+            try {
+                const { csv } = req.body;
+                if (!csv || typeof csv !== 'string') {
+                    return res.status(422).json({ message: 'Invalid request. Expected a "csv" field with CSV text.' });
+                }
+
+                const result = await this.service.importFromCsv(csv, req.user!.id);
+                return res.status(201).json(result);
+            } catch (err: any) {
+                if (err.status && err.message) {
+                    return res.status(err.status).json({ message: err.message });
+                }
+                throw err;
+            }
         },
     ];
 }

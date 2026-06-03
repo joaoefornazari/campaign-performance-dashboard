@@ -21,6 +21,9 @@ export class Campaign {
   @PrimaryGeneratedColumn()
   id!: number;
 
+  @Column({ type: 'varchar', length: 20, name: 'external_id', nullable: true })
+  external_id?: string;
+
   @Column({ type: 'varchar', length: 20 })
   name!: string;
 
