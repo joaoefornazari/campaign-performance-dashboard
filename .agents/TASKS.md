@@ -128,13 +128,16 @@ Add the Laravel relationship methods to Campaigns and Users models so web app ca
 
 Add a "deleted_at" timestamp attribute to **users**, **campaigns** and **platforms** database entities that will signal that the register was deleted.
 
-## TASK [2026-06-02T19:19:25]: Admin and Standard roles
+## TASK [2026-06-02T19:19:25]: Admin and Standard roles [DONE]
 
 Create two user roles: Admin and Standard. Admin can hard-delete registers from database; Standard cannot.
 
-## TASK []: Users API endpoints
+## TASK [2026-06-02T19:31:17]: Users API endpoints [DONE]
 
 Create endpoints that do the following:
+
+### USERS
+
 - POST create user
 - GET a single user by id
 - GET all users (limit and offset as query params, allow a search query param too)
@@ -143,9 +146,8 @@ Create endpoints that do the following:
 - DELETE hard-delete a user (requires user to be admin)
 - PUT restore a soft-deleted user by its ID
 
-## TASK []: Platform API endpoints
+### PLATFORMS
 
-Create endpoints that do the following:
 - POST create platform
 - GET a single platform by id
 - GET all platforms
@@ -154,9 +156,8 @@ Create endpoints that do the following:
 - DELETE hard-delete a platform (requires user to be admin)
 - PUT restore a soft-deleted platform by its ID
 
-## TASK []: Campaigns API endpoints
+### CAMPAIGNS
 
-Create endpoints that do the following:
 - POST create campaign
 - GET a single campaign by id
 - GET all campaign (filter by platform ID or user ID (use query params), limit and offset as query params, allow a search query param too)
@@ -165,4 +166,6 @@ Create endpoints that do the following:
 - DELETE hard-delete a campaign by its ID (requires user to be admin)
 - PUT restore a soft-deleted campaign by its ID
 
-## 
+## TASK [2026-06-02T19:31:17]: Login and logout
+
+Create an API user login endpoint and a user logout endpoint. Login must return user's email and name. Logout must have a success message and redirect user to login page (create an empty login page too).

@@ -1,7 +1,7 @@
 {
     "rules": "./.agents/INSTRUCTIONS.json",
     "run": {
-        "task": "[2026-06-02T19:19:25]",
+        "task": "[]",
         "source": "./.agents/TASKS.md"
     }
 }
