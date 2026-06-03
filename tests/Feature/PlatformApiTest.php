@@ -11,14 +11,6 @@ class PlatformApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function actingAsUser(): User
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        return $user;
-    }
-
     public function test_can_create_platform(): void
     {
         $this->actingAsUser();
