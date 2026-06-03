@@ -10,14 +10,14 @@ block content
         ) Import CSV
       input#csv-file-input.hidden(type="file" accept=".csv")
 
-      #summary-bar.grid.grid-cols-1.md-grid-cols-3.gap-4.mb-8
-        .bg-white.rounded-lg.shadow.p-6
+      #summary-bar.flex.flex-row.flex-wrap.gap-4.mb-8
+        .bg-white.flex-1.rounded-lg.shadow.p-6
           p.text-sm.text-gray-500.font-medium Total Spend
           p#total-spend.text-2xl.font-bold.text-gray-800 —
-        .bg-white.rounded-lg.shadow.p-6
+        .bg-white.flex-1.rounded-lg.shadow.p-6
           p.text-sm.text-gray-500.font-medium Total Revenue
           p#total-revenue.text-2xl.font-bold.text-gray-800 —
-        .bg-white.rounded-lg.shadow.p-6
+        .bg-white.flex-1.rounded-lg.shadow.p-6
           p.text-sm.text-gray-500.font-medium Overall ROAS
           p#overall-roas.text-2xl.font-bold.text-gray-800 —
 
