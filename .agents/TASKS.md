@@ -330,3 +330,11 @@ I want to integrate AlphaVantage API into my web app to enrich data insights. Th
 Let's analyze this plan's viability together. Bring your suggestions based on current web app state and an implementation plan. If there are any obstacles, ask me so I can help you decide the best solution to overcome them. The implementation plan will be executed on the next task.
 
 (LLM built a comprehensive plan and did atomic tasks within its context window, so I let it change to Build mode after planning was finished).
+
+## TASK [2026-06-03T18:08:57]: Start Date CSV column
+
+CSVs must have a start_date column. Previous campaigns without it must have this value be the same as `created_at` timestamp.
+
+## TASK []: Test CSV
+
+Generate a CSV with 5 company names that have stock options.
