@@ -166,6 +166,6 @@ Create endpoints that do the following:
 - DELETE hard-delete a campaign by its ID (requires user to be admin)
 - PUT restore a soft-deleted campaign by its ID
 
-## TASK [2026-06-02T19:31:17]: Login and logout
+## TASK [2026-06-03T00:36:19]: Login and logout
 
 Create an API user login endpoint and a user logout endpoint. Login must return user's email and name. Logout must have a success message and redirect user to login page (create an empty login page too).
