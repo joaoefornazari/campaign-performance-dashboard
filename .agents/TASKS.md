@@ -249,6 +249,10 @@ If CSV is valid and data is succesfully imported, a alert() must be thrown with 
 
 Create a database seeder with a small amount of data to insert into database so I can test the UI manually with valid credentials and see it working. I'd rather have you using emails without Skyhouse in it, since SkyHouse is a REAL company.
 
+## TASK [2026-06-03T13:50:00]: Campaign name character limit [DONE]
+
+Update max campaign name character limit to 200 characters. Make a migration and ensure that the character limit is updated in the database.
+
 ## TASK []: Table with data 
 
 Dashboard page must render a table of all campaigns binded to current user with the following calculated fields:

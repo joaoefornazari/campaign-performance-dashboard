@@ -24,7 +24,7 @@ export class Campaign {
   @Column({ type: 'varchar', length: 20, name: 'external_id', nullable: true })
   external_id?: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 200 })
   name!: string;
 
   @Column({ type: 'float' })

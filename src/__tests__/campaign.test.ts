@@ -109,4 +109,15 @@ describe('Campaign API', () => {
             .set('Authorization', `Bearer ${token}`)
             .expect(204);
     });
+
+    it('creates a campaign with a name longer than 20 characters', async () => {
+        const longName = 'Premium Campaign - Extended Version 2026';
+        const res = await request(server)
+            .post('/api/campaigns')
+            .set('Authorization', `Bearer ${token}`)
+            .send({ ...payload, name: longName })
+            .expect(201);
+        expect(res.body.name).toBe(longName);
+        (global as any).__longCampaignId = res.body.id;
+    });
 });
