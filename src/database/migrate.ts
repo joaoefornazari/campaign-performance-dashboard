@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AppDataSource } from '../data-source.js';
+import { AppDataSource } from '../database/data-source.js';
 
 async function runMigrations() {
     const dataSource = await AppDataSource.initialize();

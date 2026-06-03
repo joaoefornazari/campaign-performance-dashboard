@@ -7,6 +7,9 @@ import { UserRole } from '../../enums/UserRole.js';
 import { User } from '../../entities/User.js';
 import { Platform } from '../../entities/Platform.js';
 import { Campaign } from '../../entities/Campaign.js';
+import { Company } from '../../entities/Company.js';
+import { CompanyUser } from '../../entities/CompanyUser.js';
+import { StockPriceCache } from '../../entities/StockPriceCache.js';
 import { PersonalAccessToken } from '../../entities/PersonalAccessToken.js';
 import { AppDataSource } from '../data-source.js';
 
@@ -45,6 +48,33 @@ export async function runSeed(ds?: DataSource): Promise<void> {
     user = await userRepo.save(user);
   }
 
+  const companyRepo = dataSource.getRepository(Company);
+  const companyUserRepo = dataSource.getRepository(CompanyUser);
+
+  const companyNames = ['PharmaCorp', 'BeautyInc', 'HealthPlus'];
+  const companies: { id: number; name: string }[] = [];
+
+  for (const name of companyNames) {
+    let company = await companyRepo.findOne({ where: { name } });
+    if (!company) {
+      company = companyRepo.create({ name });
+      company = await companyRepo.save(company);
+    }
+    companies.push({ id: company.id, name: company.name });
+  }
+
+  const assignCompany = async (userId: number, companyId: number) => {
+    const existing = await companyUserRepo.findOne({ where: { user_id: userId, company_id: companyId } });
+    if (!existing) {
+      await companyUserRepo.save(companyUserRepo.create({ user_id: userId, company_id: companyId }));
+    }
+  };
+
+  await assignCompany(admin.id, companies[0].id);
+  await assignCompany(admin.id, companies[1].id);
+  await assignCompany(user.id, companies[1].id);
+  await assignCompany(user.id, companies[2].id);
+
   const platformNames = ['Facebook', 'Instagram', 'Google', 'TikTok'];
   const platforms: { id: number; name: string }[] = [];
 
@@ -60,11 +90,11 @@ export async function runSeed(ds?: DataSource): Promise<void> {
   const getPlatformId = (name: string) => platforms.find((p) => p.name === name)!.id;
 
   const seedCampaigns = [
-    { name: 'Wrinkle Cream — FB', spend: 4200.0, revenue: 18900.0, conversions: 312, platform: 'Facebook', user_id: admin.id },
-    { name: 'Weight Loss — IG', spend: 3100.5, revenue: 8680.0, conversions: 198, platform: 'Instagram', user_id: admin.id },
-    { name: 'Tirzepatide — FB Re', spend: 1800.0, revenue: 9540.0, conversions: 156, platform: 'Facebook', user_id: admin.id },
-    { name: 'Zepbound — Google', spend: 5500.0, revenue: 24750.0, conversions: 440, platform: 'Google', user_id: user.id },
-    { name: 'Collagen — TikTok', spend: 2200.0, revenue: 4840.0, conversions: 87, platform: 'TikTok', user_id: user.id },
+    { name: 'Wrinkle Cream — FB', spend: 4200.0, revenue: 18900.0, conversions: 312, platform: 'Facebook', user_id: admin.id, company_id: companies[1].id, start_datetime: new Date('2025-06-01') },
+    { name: 'Weight Loss — IG', spend: 3100.5, revenue: 8680.0, conversions: 198, platform: 'Instagram', user_id: admin.id, company_id: companies[1].id, start_datetime: new Date('2025-08-15') },
+    { name: 'Tirzepatide — FB Re', spend: 1800.0, revenue: 9540.0, conversions: 156, platform: 'Facebook', user_id: admin.id, company_id: companies[0].id, start_datetime: new Date('2026-01-10') },
+    { name: 'Zepbound — Google', spend: 5500.0, revenue: 24750.0, conversions: 440, platform: 'Google', user_id: user.id, company_id: companies[0].id, start_datetime: new Date('2025-11-20') },
+    { name: 'Collagen — TikTok', spend: 2200.0, revenue: 4840.0, conversions: 87, platform: 'TikTok', user_id: user.id, company_id: companies[2].id, start_datetime: new Date('2026-03-05') },
   ];
 
   for (const c of seedCampaigns) {
@@ -77,6 +107,8 @@ export async function runSeed(ds?: DataSource): Promise<void> {
         conversions: c.conversions,
         platform_id: getPlatformId(c.platform),
         user_id: c.user_id,
+        company_id: c.company_id,
+        start_datetime: c.start_datetime,
       }));
     }
   }
@@ -107,7 +139,7 @@ if (isMain) {
     synchronize: true,
     dropSchema: true,
     logging: false,
-    entities: [User, Platform, Campaign, PersonalAccessToken],
+    entities: [User, Platform, Campaign, PersonalAccessToken, Company, CompanyUser, StockPriceCache],
     migrations: [],
     subscribers: [],
   });

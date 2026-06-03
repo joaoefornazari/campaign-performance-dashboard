@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { AuthController } from '../controllers/AuthController.js';
 import { UserController } from '../controllers/UserController.js';
 import { PlatformController } from '../controllers/PlatformController.js';
+import { CompanyController } from '../controllers/CompanyController.js';
 import { CampaignController } from '../controllers/CampaignController.js';
 import { authMiddleware } from '../middlewares/Auth.js';
 import { loginRateLimiter } from '../middlewares/RateLimiter.js';
@@ -34,6 +35,17 @@ router.put('/platforms/:id', authMiddleware, ...new PlatformController().update)
 router.delete('/platforms/:id', authMiddleware, ...new PlatformController().destroy);
 router.delete('/platforms/:id/force', authMiddleware, ...new PlatformController().forceDelete);
 router.post('/platforms/:id/restore', authMiddleware, ...new PlatformController().restore);
+
+// Company routes (protected)
+router.get('/companies', authMiddleware, (req, res) => new CompanyController().index(req, res));
+router.get('/companies/:id', authMiddleware, (req, res) => new CompanyController().show(req, res));
+router.post('/companies', authMiddleware, ...new CompanyController().store);
+router.put('/companies/:id', authMiddleware, ...new CompanyController().update);
+router.delete('/companies/:id', authMiddleware, ...new CompanyController().destroy);
+router.delete('/companies/:id/force', authMiddleware, ...new CompanyController().forceDelete);
+router.post('/companies/:id/restore', authMiddleware, ...new CompanyController().restore);
+router.post('/companies/:id/lookup-ticker', authMiddleware, ...new CompanyController().lookupTicker);
+router.post('/companies/:id/fetch-stock', authMiddleware, ...new CompanyController().fetchStock);
 
 // Campaign routes (protected)
 router.get('/campaigns', authMiddleware, (req, res) => new CampaignController().index(req, res));

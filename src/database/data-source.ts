@@ -7,6 +7,9 @@ import { User } from '../entities/User.js';
 import { Platform } from '../entities/Platform.js';
 import { Campaign } from '../entities/Campaign.js';
 import { PersonalAccessToken } from '../entities/PersonalAccessToken.js';
+import { Company } from '../entities/Company.js';
+import { CompanyUser } from '../entities/CompanyUser.js';
+import { StockPriceCache } from '../entities/StockPriceCache.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +29,7 @@ export const AppDataSource = new DataSource({
   synchronize: isTest, // Auto sync schema in test mode
   dropSchema: isTest, // Drop schema in test mode for a clean state
   logging: false,
-  entities: [User, Platform, Campaign, PersonalAccessToken],
+  entities: [User, Platform, Campaign, PersonalAccessToken, Company, CompanyUser, StockPriceCache],
   migrations: isTest ? [] : [path.join(__dirname, 'migrations/[0-9]*.ts')],
   subscribers: [],
 });

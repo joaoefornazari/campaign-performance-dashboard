@@ -1,14 +1,18 @@
 import { CampaignRepository } from '../repositories/CampaignRepository.js';
 import { Campaign } from '../entities/Campaign.js';
 import { PlatformService } from './PlatformService.js';
+import { CompanyService } from './CompanyService.js';
+import { StockService } from './StockService.js';
 import { parse } from 'csv-parse/sync';
 
-const EXPECTED_CSV_HEADERS = ['campaign_id', 'campaign_name', 'spend', 'revenue', 'conversions', 'platform'];
+const EXPECTED_CSV_HEADERS = ['campaign_id', 'campaign_name', 'spend', 'revenue', 'conversions', 'platform', 'company', 'start_date'];
 
 export class CampaignService {
   constructor(
     private campaignRepository = new CampaignRepository(),
-    private platformService = new PlatformService()
+    private platformService = new PlatformService(),
+    private companyService = new CompanyService(),
+    private stockService = new StockService()
   ) {}
 
   async create(data: Partial<Campaign>): Promise<Campaign> {
@@ -26,7 +30,22 @@ export class CampaignService {
     per_page?: number;
     page?: number;
   }) {
-    return await this.campaignRepository.findAllPaginated(params);
+    const result = await this.campaignRepository.findAllPaginated(params);
+
+    for (const campaign of result.data) {
+      const company = (campaign as any).company;
+      if (company?.ticker_symbol && campaign.start_datetime) {
+        const variation = await this.stockService.getVariation(
+          company.ticker_symbol,
+          campaign.start_datetime
+        );
+        (campaign as any).stock_variation = variation.variation;
+      } else {
+        (campaign as any).stock_variation = null;
+      }
+    }
+
+    return result;
   }
 
   async update(id: number, data: Partial<Campaign>): Promise<Campaign | null> {
@@ -116,6 +135,17 @@ export class CampaignService {
         throw { status: 422, message: `Invalid conversions value for campaign "${name}".` };
       }
 
+      let startDatetime: Date;
+      const rawDate = (row.start_date || '').trim();
+      if (rawDate) {
+        startDatetime = new Date(rawDate);
+        if (isNaN(startDatetime.getTime())) {
+          throw { status: 422, message: `Invalid start_date "${rawDate}" for campaign "${name}".` };
+        }
+      } else {
+        startDatetime = new Date();
+      }
+
       const platformName = row.platform.trim();
       if (platformName.length < 2 || platformName.length > 20) {
         throw { status: 422, message: `Platform name "${platformName}" must be between 2 and 20 characters.` };
@@ -126,6 +156,13 @@ export class CampaignService {
         platform = await this.platformService.create({ name: platformName });
       }
 
+      let companyId: number | undefined;
+      const companyName = (row.company || '').trim();
+      if (companyName) {
+        const company = await this.companyService.findOrCreateByName(companyName);
+        companyId = company.id;
+      }
+
       await this.campaignRepository.create({
         name,
         spend,
@@ -133,8 +170,19 @@ export class CampaignService {
         conversions,
         platform_id: platform.id,
         user_id: userId,
+        company_id: companyId,
         external_id: row.campaign_id.trim(),
+        start_datetime: startDatetime,
       });
+
+      if (companyId && process.env.NODE_ENV !== 'test') {
+        try {
+          await this.stockService.fetchAndCacheForCompany(companyId);
+          await new Promise(r => setTimeout(r, 1500));
+        } catch (err) {
+          console.error(`[CampaignService] Failed to fetch stock data for company ${companyId}:`, err);
+        }
+      }
 
       importedCount++;
     }

@@ -64,21 +64,30 @@ npm run dev:backend
 }
 ```
 
-## Functionalities
+## Features
+
+- **Login / Logout**: Authenticate as admin or standard user; auto-redirect to dashboard when logged in, to login when logged out.
+- **CSV Import**: Upload a CSV with campaign data. Validates format (8 required columns) and shows a modal on errors.
+- **Dashboard Table**: Displays campaigns with **ROAS**, **CPA**, color-coded rows (green ≥ 3.0, yellow 1.5–2.99, red < 1.5), and **Stock Variation** (via [AlphaVantage API](https://www.alphavantage.co/)).
+- **Summary Bar**: Total Spend, Total Revenue, and Overall ROAS at the top.
+- **ROAS Filter**: Filter campaigns by minimum ROAS value.
 
 ### Import CSV with data
 
-Example of valid CSV:
+Valid CSV format (8 columns):
 
 ```csv
-campaign_id,campaign_name,spend,revenue,conversions,platform
-C001,CampaignName,4200.00,18900.00,312,PlatformName
+campaign_id,campaign_name,spend,revenue,conversions,platform,company,start_date
+C001,Wrinkle Cream FB,4200.00,18900.00,312,Facebook,BeautyInc,2025-06-01
 ```
 
-### Filters
+## Available Scripts
 
-You can visualize Campaigns by mininum ROAS value.
-
-### Data Insights
-
-Above campaigns list there is a summary of Total Spend, Total Revenue, and Overall ROAS to improve data analysis.
+| Command | Description |
+|---|---|
+| `npm run dev:backend` | Start the Express server |
+| `npm run dev:frontend` | Watch and rebuild frontend assets |
+| `npm run build` | Build frontend assets for production |
+| `npm test` | Run the test suite (Vitest) |
+| `npm run migrate` | Run database migrations |
+| `npm run seed` | Seed the database with sample data |

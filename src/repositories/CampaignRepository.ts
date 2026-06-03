@@ -31,7 +31,8 @@ export class CampaignRepository {
     const skip = (page - 1) * perPage;
 
     const queryBuilder = this.repo.createQueryBuilder('campaign')
-      .leftJoinAndSelect('campaign.platform', 'platform');
+      .leftJoinAndSelect('campaign.platform', 'platform')
+      .leftJoinAndSelect('campaign.company', 'company');
 
     if (platform_id) {
       queryBuilder.andWhere('campaign.platform_id = :platform_id', { platform_id });

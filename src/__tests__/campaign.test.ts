@@ -4,12 +4,14 @@ import { server } from './setup.js';
 import { UserService } from '../services/UserService.js';
 import { UserRole } from '../enums/UserRole.js';
 import { PlatformService } from '../services/PlatformService.js';
+import { CompanyService } from '../services/CompanyService.js';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 describe('Campaign API', () => {
     let token: string;
     let platformId: number;
     let userId: number;
+    let companyId: number;
     const payload = {
         name: 'Test Campaign',
         spend: 1000,
@@ -17,6 +19,7 @@ describe('Campaign API', () => {
         conversions: 20,
         platform_id: 0,
         user_id: 0,
+        company_id: 0,
     };
 
     beforeAll(async () => {
@@ -38,8 +41,13 @@ describe('Campaign API', () => {
         const platform = await platformService.create({ name: 'Test Platform' });
         platformId = platform.id;
 
+        const companyService = new CompanyService();
+        const company = await companyService.create({ name: 'TestCompany' });
+        companyId = company.id;
+
         payload.platform_id = platformId;
         payload.user_id = userId;
+        payload.company_id = companyId;
 
         const login = await request(server)
             .post('/api/login')
@@ -144,5 +152,17 @@ describe('Campaign API', () => {
             .expect(201);
         expect(res.body.name).toBe(longName);
         (global as any).__longCampaignId = res.body.id;
+    });
+
+    it('campaign list includes company relation', async () => {
+        const res = await request(server)
+            .get('/api/campaigns')
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+        if (res.body.data.length > 0) {
+            const campaign = res.body.data[0];
+            expect(campaign).toHaveProperty('company');
+            expect(campaign).toHaveProperty('stock_variation');
+        }
     });
 });
