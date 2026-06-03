@@ -176,7 +176,7 @@ Create an API user login endpoint and a user logout endpoint. Login must return 
 
 Add to `./tests/Feature/AuthTest.php` a stress test to validate Laravel rate limit applied on `/api/login` endpoint.
 
-## TASK [2026-06-03T01:25:03] (CRITICAL): Laravel to Express
+## TASK [2026-06-03T01:25:03] (CRITICAL): Laravel to Express [DONE]
 
 Developer misread the MVP specs. It requires **Node and Express** as backend technologies, *not Laravel*. That means that now we have to **migrate the backend from Laravel to Node** safely.
 
@@ -194,3 +194,8 @@ Tech migration directives:
 Double-check if there is nothing missing above that the web app requires to keep working as it is before migration, and if there is something missing, give me suggestions and let me choose them for you so you put them in your plan.
 
 **Execute migration step-by-step, and ask me allowance to proceed to next step right after you finish a step.**
+
+## TASK [2026-06-03T02:49:02] (CRITICAL): Check Migration
+
+You will check if migration was successful. Node files are inside `./src`. Laravel files are everything outside of it. Compare the tech migration directives and your output will be a list of all functionalities' succesfully migrated. If there are failures, list them with detail and bring a fix plan.
+
