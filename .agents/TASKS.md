@@ -279,3 +279,27 @@ Migration failed: CannotConnectAlreadyConnectedError: Cannot create a "default" 
 ```
 
 Please check its cause and fix it.
+
+## TASK [2026-06-03T14:35:28]: Unloaded campaigns from CSV
+
+This CSV was imported:
+
+```csv
+campaign_id,campaign_name,spend,revenue,conversions,platform
+C001,Wrinkle Cream — FB Broad,4200.00,18900.00,312,Facebook
+C002,Weight Loss — IG Stories,3100.50,8680.00,198,Instagram
+C003,Zepbound — Google Search,5500.00,24750.00,440,Google
+C004,Collagen — TikTok,2200.00,4840.00,87,TikTok
+C005,Tirzepatide — FB Retargeting,1800.00,9540.00,156,Facebook
+```
+
+But only those rows are displayed in the table:
+
+```csv
+campaign_id,campaign_name,spend,revenue,conversions,platform
+C001,Wrinkle Cream — FB Broad,4200.00,18900.00,312,Facebook
+C002,Weight Loss — IG Stories,3100.50,8680.00,198,Instagram
+C005,Tirzepatide — FB Retargeting,1800.00,9540.00,156,Facebook
+```
+
+Pinpoint the cause of this misbehavior so I can plan next task.
