@@ -331,10 +331,14 @@ Let's analyze this plan's viability together. Bring your suggestions based on cu
 
 (LLM built a comprehensive plan and did atomic tasks within its context window, so I let it change to Build mode after planning was finished).
 
-## TASK [2026-06-03T18:08:57]: Start Date CSV column
+## TASK [2026-06-03T18:08:57]: Start Date CSV column [DONE]
 
 CSVs must have a start_date column. Previous campaigns without it must have this value be the same as `created_at` timestamp.
 
-## TASK []: Test CSV
+## TASK [2026-06-03T18:15:24]: Test CSV
 
 Generate a CSV with 5 company names that have stock options.
+
+## TASK []: Update README
+
+Update README's usage instructions so they reflect current web app state.
