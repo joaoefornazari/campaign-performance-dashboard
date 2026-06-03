@@ -245,7 +245,7 @@ If CSV doesn't follow the above structure, it must throw a modal warning user th
 
 If CSV is valid and data is succesfully imported, a alert() must be thrown with a confirmation message.
 
-## TASK [2026-06-03T13:24:47]: Database seeder
+## TASK [2026-06-03T13:24:47]: Database seeder [DONE]
 
 Create a database seeder with a small amount of data to insert into database so I can test the UI manually with valid credentials and see it working. I'd rather have you using emails without Skyhouse in it, since SkyHouse is a REAL company.
 
