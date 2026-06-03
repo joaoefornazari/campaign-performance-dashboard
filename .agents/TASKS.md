@@ -251,7 +251,7 @@ Create a database seeder with a small amount of data to insert into database so 
 
 ## TASK [2026-06-03T13:50:00]: Campaign name character limit
 
-Update max campaign name character limit to 200 characters.
+Update max campaign name character limit to 200 characters. Make a migration and ensure that the character limit is updated in the database.
 
 ## TASK []: Table with data 
 
