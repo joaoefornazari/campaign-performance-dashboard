@@ -175,3 +175,45 @@ Create an API user login endpoint and a user logout endpoint. Login must return 
 ## TASK [2026-06-03T00:54:40]: Login stress test [DONE]
 
 Add to `./tests/Feature/AuthTest.php` a stress test to validate Laravel rate limit applied on `/api/login` endpoint.
+
+## TASK [2026-06-03T01:25:03] (CRITICAL): Laravel to Express [DONE]
+
+Developer misread the MVP specs. It requires **Node and Express** as backend technologies, *not Laravel*. That means that now we have to **migrate the backend from Laravel to Node** safely.
+
+Tech migration directives:
+- Routing: Express
+- Middleware: Express native middleware
+- ORM: TypeORM
+- Testing: Vite
+- Storage: local as Laravel does
+- /app structures: "translate" them to Node files
+- use Typescript
+- Resources: Pug
+- Providers: "translate" them to Node files
+
+Double-check if there is nothing missing above that the web app requires to keep working as it is before migration, and if there is something missing, give me suggestions and let me choose them for you so you put them in your plan.
+
+**Execute migration step-by-step, and ask me allowance to proceed to next step right after you finish a step.**
+
+## TASK [2026-06-03T02:49:02] (CRITICAL): Check Migration [DONE]
+
+You will check if migration was successful. Node files are inside `./src`. Laravel files are everything outside of it. Compare the tech migration directives and your output will be a list of all functionalities' succesfully migrated. If there are failures, list them with detail and bring a fix plan.
+
+## TASK [2026-06-03T03:27:43]: Test Suite fix [DONE]
+
+Node test suite is getting errors. Run the test suite, make a fix plan and execute the fix plan. Goal: web app functionalities are working as intended.
+
+## TASK [2026-06-03T03:36:20]: Login stress tes (again) [DONE]
+
+Add to `./src/__tests__/auth.test.ts` a stress test to validate rate limit applied on `/api/login` endpoint.
+
+## TASK [2026-06-03T03:45:01]: Failure on UserRoleAuthorization test
+
+Output of `npm test`:
+
+```bash
+ FAIL  src/__tests__/userRoleAuthorization.test.ts > User Role Authorization (admin gate) > standard user cannot force‑delete a user
+Error: expected 201 "Created", got 500 "Internal Server Error"
+```
+
+Find error cause and fix it, please.

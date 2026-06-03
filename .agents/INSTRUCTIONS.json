@@ -25,13 +25,17 @@
             "forbidden": ["jquery", "inline-event-handlers"]
         },
         "backend": {
+            "runtime": {
+                "name": "Node.js",
+                "version": "24.16.x"
+            },
             "framework": {
-                "name": "Laravel",
-                "version": "11.x"
+                "name": "Express.js",
+                "version": "5.x" 
             },
             "language": {
-                "name": "php",
-                "version": "8.3.x"
+                "name": "javascript",
+                "version": "compatible-with-backend-runtime-version"
             },
             "database": {
                 "language": "SQL",
@@ -141,7 +145,8 @@
         "development-guidelines": [
             "HTML5 best practices",
             "CSS3 best practices",
-            "Laravel best practices"
+            "Node best practices",
+            "Express best practices"
         ],        
         "execute-multiple-tasks-at-once": false
     }
