@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Platform } from './Platform.js';
 import { User } from './User.js';
+import { Company } from './Company.js';
 
 @Entity('campaigns')
 @Check("campaigns_name_min_length", "char_length(name) >= 10")
@@ -42,6 +43,12 @@ export class Campaign {
   @Column({ type: 'integer', name: 'user_id' })
   user_id!: number;
 
+  @Column({ type: 'integer', name: 'company_id', nullable: true })
+  company_id?: number | null;
+
+  @Column({ type: 'timestamp', name: 'start_datetime', nullable: true })
+  start_datetime?: Date | null;
+
   @CreateDateColumn({ name: 'created_at', nullable: true })
   created_at?: Date;
 
@@ -64,4 +71,11 @@ export class Campaign {
   })
   @JoinColumn({ name: 'user_id' })
   user!: User;
+
+  @ManyToOne(() => Company, (company) => company.campaigns, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE'
+  })
+  @JoinColumn({ name: 'company_id' })
+  company?: Company | null;
 }

@@ -7,8 +7,6 @@ import {
 } from '../validations/schemas.js';
 import { adminGate } from '../middlewares/AdminGate.js';
 
-const EXPECTED_CSV_HEADERS = ['campaign_id', 'campaign_name', 'spend', 'revenue', 'conversions', 'platform'];
-
 export class CampaignController {
     constructor(private readonly service = new CampaignService()) { }
 
