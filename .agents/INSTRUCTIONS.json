@@ -8,7 +8,7 @@
         },
         "backend-tests": {
             "required": true,
-            "framework": "phpunit"
+            "framework": "vitest"
         },
         "test-before-implementation": false
     },
