@@ -247,7 +247,7 @@ If CSV is valid and data is succesfully imported, a alert() must be thrown with 
 
 ## TASK [2026-06-03T13:24:47]: Database seeder
 
-Create a database seeder with a small amount of data to insert into database so I can test the UI manually with valid credentials and see it working.
+Create a database seeder with a small amount of data to insert into database so I can test the UI manually with valid credentials and see it working. I'd rather have you using emails without Skyhouse in it, since SkyHouse is a REAL company.
 
 ## TASK []: Table with data 
 
