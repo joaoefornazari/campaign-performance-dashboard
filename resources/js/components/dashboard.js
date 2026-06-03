@@ -153,6 +153,7 @@ export function initDashboard() {
 
             return `<tr class="${rowClass} border-b border-gray-200">
                 <td class="px-4 py-3 text-sm text-gray-800">${escapeHtml(c.name)}</td>
+                <td class="px-4 py-3 text-sm text-gray-800">${formatDatetime(c.start_datetime)}</td>
                 <td class="px-4 py-3 text-sm text-gray-600">${escapeHtml(platformName)}</td>
                 <td class="px-4 py-3 text-sm text-gray-800 text-right">${formatCurrency(c.spend)}</td>
                 <td class="px-4 py-3 text-sm text-gray-800 text-right">${formatCurrency(c.revenue)}</td>
@@ -223,6 +224,10 @@ export function initDashboard() {
         if (value === null || value === undefined) return 'text-gray-400';
         if (value >= 0) return 'text-green-600';
         return 'text-red-600';
+    }
+
+    function formatDatetime(value) {
+        return new Date(value).toLocaleDateString()
     }
 
     function formatCurrency(value) {
