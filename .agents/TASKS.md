@@ -335,10 +335,10 @@ Let's analyze this plan's viability together. Bring your suggestions based on cu
 
 CSVs must have a start_date column. Previous campaigns without it must have this value be the same as `created_at` timestamp.
 
-## TASK [2026-06-03T18:15:24]: Test CSV
+## TASK [2026-06-03T18:15:24]: Test CSV [DONE]
 
 Generate a CSV with 5 company names that have stock options.
 
-## TASK []: Update README
+## TASK [2026-06-03T18:19:21]: Update README
 
 Update README's usage instructions so they reflect current web app state.
