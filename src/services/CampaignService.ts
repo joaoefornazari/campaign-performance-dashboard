@@ -175,8 +175,13 @@ export class CampaignService {
         start_datetime: startDatetime,
       });
 
-      if (companyId) {
-        this.stockService.fetchAndCacheForCompany(companyId).catch(() => {});
+      if (companyId && process.env.NODE_ENV !== 'test') {
+        try {
+          await this.stockService.fetchAndCacheForCompany(companyId);
+          await new Promise(r => setTimeout(r, 1500));
+        } catch (err) {
+          console.error(`[CampaignService] Failed to fetch stock data for company ${companyId}:`, err);
+        }
       }
 
       importedCount++;

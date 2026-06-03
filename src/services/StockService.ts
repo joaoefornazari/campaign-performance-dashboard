@@ -3,6 +3,16 @@ import { CompanyRepository } from '../repositories/CompanyRepository.js';
 
 const ALPHAVANTAGE_BASE = 'https://www.alphavantage.co/query';
 
+const TICKER_OVERRIDES: Record<string, string> = {
+  'Apple': 'AAPL',
+  'Tesla': 'TSLA',
+  'Amazon': 'AMZN',
+  'Netflix': 'NFLX',
+  'Microsoft': 'MSFT',
+  'Google': 'GOOGL',
+  'Meta': 'META',
+};
+
 export class StockService {
   constructor(
     private stockCacheRepo = new StockCacheRepository(),
@@ -23,6 +33,14 @@ export class StockService {
 
     if (company.ticker_symbol) return company.ticker_symbol;
 
+    const override = TICKER_OVERRIDES[company.name];
+    if (override) {
+      company.ticker_symbol = override;
+      await this.companyRepo.update(company, { ticker_symbol: override });
+      console.log(`[StockService] Using ticker override: ${company.name} -> ${override}`);
+      return override;
+    }
+
     const apiKey = this.getApiKey();
     const url = `${ALPHAVANTAGE_BASE}?function=SYMBOL_SEARCH&keywords=${encodeURIComponent(company.name)}&apikey=${apiKey}`;
 
@@ -30,19 +48,33 @@ export class StockService {
     try {
       const res = await fetch(url);
       data = await res.json();
-    } catch {
+    } catch (err) {
+      console.error(`[StockService] Network error fetching ticker for company ${company.name}:`, err);
       return null;
     }
 
     const matches = data?.bestMatches;
-    if (!matches || matches.length === 0) return null;
+    if (!matches || matches.length === 0) {
+      if (data?.Note) console.warn(`[StockService] AlphaVantage note for ${company.name}:`, data.Note);
+      if (data?.Information) console.warn(`[StockService] AlphaVantage info for ${company.name}:`, data.Information);
+      return null;
+    }
 
-    const bestMatch = matches[0];
+    const usEquity = matches.filter((m: any) =>
+      m['4. region'] === 'United States' && m['3. type'] === 'Equity'
+    );
+
+    const candidates = usEquity.length > 0 ? usEquity : matches;
+
+    candidates.sort((a: any, b: any) => parseFloat(b['9. matchScore']) - parseFloat(a['9. matchScore']));
+
+    const bestMatch = candidates[0];
     const ticker = bestMatch['1. symbol'] || null;
 
     if (ticker) {
       company.ticker_symbol = ticker;
       await this.companyRepo.update(company, { ticker_symbol: ticker });
+      console.log(`[StockService] Ticker resolved: ${company.name} -> ${ticker}`);
     }
 
     return ticker;
@@ -56,24 +88,43 @@ export class StockService {
     try {
       const res = await fetch(url);
       data = await res.json();
-    } catch {
+    } catch (err) {
+      console.error(`[StockService] Network error fetching monthly data for ${ticker}:`, err);
+      return;
+    }
+
+    if (data?.Note) {
+      console.warn(`[StockService] AlphaVantage note for ${ticker}:`, data.Note);
+      return;
+    }
+    if (data?.Information) {
+      console.warn(`[StockService] AlphaVantage info for ${ticker}:`, data.Information);
       return;
     }
 
     const series = data?.['Monthly Adjusted Time Series'];
-    if (!series) return;
+    if (!series) {
+      console.warn(`[StockService] No monthly data for ${ticker}:`, JSON.stringify(data).slice(0, 200));
+      return;
+    }
 
+    let count = 0;
     for (const [dateStr, values] of Object.entries(series)) {
       const close = parseFloat((values as any)['5. adjusted close']);
       if (!isNaN(close)) {
         await this.stockCacheRepo.upsert(ticker, dateStr, close);
+        count++;
       }
     }
+    console.log(`[StockService] Cached ${count} monthly data points for ${ticker}`);
   }
 
   async fetchAndCacheForCompany(companyId: number): Promise<void> {
     const ticker = await this.lookupAndCacheTicker(companyId);
-    if (!ticker) return;
+    if (!ticker) {
+      console.warn(`[StockService] Could not resolve ticker for company ID ${companyId}, skipping.`);
+      return;
+    }
     await this.fetchMonthlyData(ticker);
   }
 
