@@ -21,6 +21,16 @@ block content
           p.text-sm.text-gray-500.font-medium Overall ROAS
           p#overall-roas.text-2xl.font-bold.text-gray-800 —
 
+      .flex.items-center.gap-3.mb-4
+        label.text-sm.font-semibold.text-gray-700(for="min-roas-filter") Minimum ROAS:
+        input#min-roas-filter(
+          type="number"
+          min="0"
+          step="0.1"
+          placeholder="e.g. 2.0"
+          class="w-32 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        )
+
       #campaigns-section.mt-8
         h2.text-2xl.font-bold.text-gray-800.mb-4 Your Campaigns
         #campaigns-loading.text-gray-600 Loading campaigns...

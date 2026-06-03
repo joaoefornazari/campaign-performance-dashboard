@@ -74,6 +74,11 @@ export function initDashboard() {
         });
     }
 
+    const filterInput = document.getElementById('min-roas-filter');
+    if (filterInput) {
+        filterInput.addEventListener('input', applyRoasFilter);
+    }
+
     loadCampaigns(token);
     loadSummary(token);
 
@@ -101,12 +106,70 @@ export function initDashboard() {
         }
     }
 
+    let allCampaigns = [];
+
+    function renderCampaigns(campaigns) {
+        const table = document.getElementById('campaigns-table');
+        const tbody = document.getElementById('campaigns-table-body');
+        const empty = document.getElementById('campaigns-empty');
+
+        if (!tbody) return;
+
+        if (campaigns.length === 0) {
+            if (table) table.classList.add('hidden');
+            if (empty) empty.classList.remove('hidden');
+            return;
+        }
+
+        if (table) table.classList.remove('hidden');
+        if (empty) empty.classList.add('hidden');
+
+        tbody.innerHTML = campaigns.map(c => {
+            const roas = c.spend > 0 ? (c.revenue / c.spend) : null;
+            const cpa = c.conversions > 0 ? (c.spend / c.conversions) : null;
+
+            let rowClass = '';
+            if (roas !== null) {
+                if (roas >= 3.0) rowClass = 'bg-green-100';
+                else if (roas >= 1.5) rowClass = 'bg-yellow-100';
+                else rowClass = 'bg-red-100';
+            }
+
+            const platformName = c.platform ? c.platform.name : '—';
+
+            return `<tr class="${rowClass} border-b border-gray-200">
+                <td class="px-4 py-3 text-sm text-gray-800">${escapeHtml(c.name)}</td>
+                <td class="px-4 py-3 text-sm text-gray-600">${escapeHtml(platformName)}</td>
+                <td class="px-4 py-3 text-sm text-gray-800 text-right">${formatCurrency(c.spend)}</td>
+                <td class="px-4 py-3 text-sm text-gray-800 text-right">${formatCurrency(c.revenue)}</td>
+                <td class="px-4 py-3 text-sm text-gray-800 text-right">${c.conversions}</td>
+                <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${roas !== null ? roas.toFixed(2) : 'N/A'}</td>
+                <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${cpa !== null ? formatCurrency(cpa) : 'N/A'}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    function applyRoasFilter() {
+        const filterInput = document.getElementById('min-roas-filter');
+        if (!filterInput) {
+            renderCampaigns(allCampaigns);
+            return;
+        }
+        const minRoas = parseFloat(filterInput.value);
+        if (isNaN(minRoas) || minRoas < 0) {
+            renderCampaigns(allCampaigns);
+            return;
+        }
+        const filtered = allCampaigns.filter(c => {
+            const roas = c.spend > 0 ? (c.revenue / c.spend) : null;
+            return roas !== null && roas >= minRoas;
+        });
+        renderCampaigns(filtered);
+    }
+
     async function loadCampaigns(token) {
         const loading = document.getElementById('campaigns-loading');
         const error = document.getElementById('campaigns-error');
-        const empty = document.getElementById('campaigns-empty');
-        const table = document.getElementById('campaigns-table');
-        const tbody = document.getElementById('campaigns-table-body');
 
         try {
             const res = await fetch('/api/campaigns', {
@@ -116,44 +179,16 @@ export function initDashboard() {
             if (!res.ok) throw new Error('Failed to fetch');
 
             const data = await res.json();
-            const campaigns = data.data || [];
+            allCampaigns = data.data || [];
 
             if (loading) loading.classList.add('hidden');
             if (error) error.classList.add('hidden');
 
-            if (campaigns.length === 0) {
-                if (empty) empty.classList.remove('hidden');
-                return;
-            }
-
-            if (table) table.classList.remove('hidden');
-            if (empty) empty.classList.add('hidden');
-
-            tbody.innerHTML = campaigns.map(c => {
-                const roas = c.spend > 0 ? (c.revenue / c.spend) : null;
-                const cpa = c.conversions > 0 ? (c.spend / c.conversions) : null;
-
-                let rowClass = '';
-                if (roas !== null) {
-                    if (roas >= 3.0) rowClass = 'bg-green-100';
-                    else if (roas >= 1.5) rowClass = 'bg-yellow-100';
-                    else rowClass = 'bg-red-100';
-                }
-
-                const platformName = c.platform ? c.platform.name : '—';
-
-                return `<tr class="${rowClass} border-b border-gray-200">
-                    <td class="px-4 py-3 text-sm text-gray-800">${escapeHtml(c.name)}</td>
-                    <td class="px-4 py-3 text-sm text-gray-600">${escapeHtml(platformName)}</td>
-                    <td class="px-4 py-3 text-sm text-gray-800 text-right">${formatCurrency(c.spend)}</td>
-                    <td class="px-4 py-3 text-sm text-gray-800 text-right">${formatCurrency(c.revenue)}</td>
-                    <td class="px-4 py-3 text-sm text-gray-800 text-right">${c.conversions}</td>
-                    <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${roas !== null ? roas.toFixed(2) : 'N/A'}</td>
-                    <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${cpa !== null ? formatCurrency(cpa) : 'N/A'}</td>
-                </tr>`;
-            }).join('');
+            renderCampaigns(allCampaigns);
         } catch (err) {
             if (loading) loading.classList.add('hidden');
+            const table = document.getElementById('campaigns-table');
+            const empty = document.getElementById('campaigns-empty');
             if (table) table.classList.add('hidden');
             if (empty) empty.classList.add('hidden');
             if (error) {

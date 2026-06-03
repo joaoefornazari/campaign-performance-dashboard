@@ -15,6 +15,7 @@ function setupDom() {
         <p id="total-revenue">—</p>
         <p id="overall-roas">—</p>
       </div>
+      <input id="min-roas-filter" type="number" min="0" step="0.1" placeholder="e.g. 2.0" />
       <div id="campaigns-loading">Loading campaigns...</div>
       <div id="campaigns-error" class="hidden"></div>
       <div id="campaigns-empty" class="hidden"></div>
@@ -212,5 +213,119 @@ describe('Dashboard table', () => {
       const roas = document.getElementById('overall-roas');
       expect(roas!.textContent).toBe('N/A');
     });
+  });
+
+  it('shows all campaigns when ROAS filter is empty', async () => {
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+  });
+
+  it('filters campaigns by minimum ROAS value', async () => {
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+
+    const filterInput = document.getElementById('min-roas-filter') as HTMLInputElement;
+    filterInput.value = '3.0';
+    filterInput.dispatchEvent(new Event('input'));
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(2);
+    });
+
+    const rows = document.querySelectorAll('#campaigns-table-body tr');
+    expect(rows[0].children[0].textContent).toBe('Wrinkle Cream FB');
+    expect(rows[1].children[0].textContent).toBe('Zepbound Google');
+  });
+
+  it('shows all campaigns when ROAS filter is non-numeric', async () => {
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+
+    const filterInput = document.getElementById('min-roas-filter') as HTMLInputElement;
+    filterInput.value = 'abc';
+    filterInput.dispatchEvent(new Event('input'));
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+  });
+
+  it('shows empty state when ROAS filter excludes all campaigns', async () => {
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+
+    const filterInput = document.getElementById('min-roas-filter') as HTMLInputElement;
+    filterInput.value = '10';
+    filterInput.dispatchEvent(new Event('input'));
+
+    await vi.waitFor(() => {
+      const empty = document.getElementById('campaigns-empty');
+      expect(empty!.classList.contains('hidden')).toBe(false);
+    });
+
+    const table = document.getElementById('campaigns-table');
+    expect(table!.classList.contains('hidden')).toBe(true);
   });
 });
