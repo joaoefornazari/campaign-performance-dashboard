@@ -361,3 +361,7 @@ Verify API integration output, then verify how our API handles it and check the 
 ## TASK [2026-06-03T19:23:02]: Soft and Hard deletes on UI
 
 Implement soft and hard deletes as buttons appended to each campaign row so standard user can soft-delete campaigns and admin users can soft-delete and hard-delete campaigns.
+
+## TASK [2026-06-03T19:32:00]:Soft-deleted registries
+
+Make another table below the standard dashboard table that displays soft-deleted campaigns. The last column of each campaign in the table must be a "Restore" button that restore the campaign, bringing it back to the standard table.
