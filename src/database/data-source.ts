@@ -27,6 +27,6 @@ export const AppDataSource = new DataSource({
   dropSchema: isTest, // Drop schema in test mode for a clean state
   logging: false,
   entities: [User, Platform, Campaign, PersonalAccessToken],
-  migrations: isTest ? [] : [path.join(__dirname, 'migrations/*.ts')],
+  migrations: isTest ? [] : [path.join(__dirname, 'migrations/[0-9]*.ts')],
   subscribers: [],
 });

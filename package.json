@@ -7,7 +7,7 @@
         "dev:backend": "tsx watch src/index.ts",
         "start:backend": "node dist/src/index.js",
         "seed": "tsx src/database/seeders/seed.ts",
-        "migrate": "tsx src/database/migrations/run.ts",
+        "migrate": "tsx src/database/migrate.ts",
         "test": "vitest run"
     },
     "devDependencies": {
