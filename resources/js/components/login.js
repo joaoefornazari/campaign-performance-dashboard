@@ -2,6 +2,11 @@ import { login } from '../services/authService.js';
 import { storage } from '../utils/storage.js';
 
 export function initLoginForm() {
+    if (storage.getToken()) {
+        window.location.href = '/dashboard';
+        return;
+    }
+
     const form = document.getElementById('login-form');
     const errorEl = document.getElementById('login-error');
 

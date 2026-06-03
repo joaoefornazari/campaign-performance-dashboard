@@ -34,9 +34,9 @@ function readManifest(): Record<string, any> {
 // Static files from Vite build
 app.use('/assets', express.static(path.resolve(__dirname, '../build/assets')));
 
-// Root route renders the main view with Vite assets (if manifest exists)
+// Root route redirects to login (or dashboard if already authenticated — handled client-side)
 app.get('/', (_req, res) => {
-  res.render('index', { assets: readManifest() });
+  res.redirect('/login');
 });
 
 // Login page

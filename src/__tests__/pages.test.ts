@@ -3,6 +3,12 @@ import { server } from './setup.js';
 import { describe, expect, it } from 'vitest';
 
 describe('Pages', () => {
+  it('GET / should redirect to /login', async () => {
+    const res = await request(server).get('/');
+    expect(res.status).toBe(302);
+    expect(res.headers.location).toBe('/login');
+  });
+
   it('GET /login should render login page', async () => {
     const res = await request(server).get('/login');
     expect(res.status).toBe(200);
