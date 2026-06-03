@@ -203,6 +203,17 @@ You will check if migration was successful. Node files are inside `./src`. Larav
 
 Node test suite is getting errors. Run the test suite, make a fix plan and execute the fix plan. Goal: web app functionalities are working as intended.
 
-## TASK [2026-06-03T03:36:20]: Login stress tes (again)
+## TASK [2026-06-03T03:36:20]: Login stress tes (again) [DONE]
 
 Add to `./src/__tests__/auth.test.ts` a stress test to validate rate limit applied on `/api/login` endpoint.
+
+## TASK [2026-06-03T03:45:01]: Failure on UserRoleAuthorization test
+
+Output of `npm test`:
+
+```bash
+ FAIL  src/__tests__/userRoleAuthorization.test.ts > User Role Authorization (admin gate) > standard user cannot force‑delete a user
+Error: expected 201 "Created", got 500 "Internal Server Error"
+```
+
+Find error cause and fix it, please.
