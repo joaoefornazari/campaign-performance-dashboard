@@ -280,7 +280,7 @@ Migration failed: CannotConnectAlreadyConnectedError: Cannot create a "default" 
 
 Please check its cause and fix it.
 
-## TASK [2026-06-03T14:35:28]: Unloaded campaigns from CSV
+## TASK [2026-06-03T14:35:28]: Unloaded campaigns from CSV [DONE]
 
 This CSV was imported:
 
@@ -304,7 +304,7 @@ C005,Tirzepatide — FB Retargeting,1800.00,9540.00,156,Facebook
 
 Pinpoint the cause of this misbehavior so I can plan next task.
 
-## TASK [2026-06-03T16:17:46]: Summary bar
+## TASK [2026-06-03T16:17:46]: Summary bar [DONE]
 
 Include a summary bar at the top showing: Total Spend, Total Revenue, and Overall ROAS
 
