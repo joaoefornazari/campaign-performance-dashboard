@@ -33,7 +33,19 @@ export const StoreCampaignSchema = z.object({
   revenue: z.number().min(0, 'The revenue must be at least 0.'),
   conversions: z.number().int().min(0, 'The conversions must be at least 0.'),
   platform_id: z.number().int(),
-  user_id: z.number().int()
+  user_id: z.number().int(),
+  company_id: z.number().int().optional(),
+  start_datetime: z.string().datetime().optional()
+});
+
+export const StoreCompanySchema = z.object({
+  name: z.string().min(1, 'The name field is required.').max(255),
+  ticker_symbol: z.string().optional()
+});
+
+export const UpdateCompanySchema = z.object({
+  name: z.string().min(1, 'The name field is required.').max(255).optional(),
+  ticker_symbol: z.string().optional()
 });
 
 export const UpdateCampaignSchema = z.object({
@@ -42,5 +54,7 @@ export const UpdateCampaignSchema = z.object({
   revenue: z.number().min(0, 'The revenue must be at least 0.').optional(),
   conversions: z.number().int().min(0, 'The conversions must be at least 0.').optional(),
   platform_id: z.number().int().optional(),
-  user_id: z.number().int().optional()
+  user_id: z.number().int().optional(),
+  company_id: z.number().int().optional(),
+  start_datetime: z.string().datetime().optional()
 });
