@@ -27,6 +27,8 @@ npm install
 npm run build
 ```
 
+- Start PostgreSQL on your machine ([Windows guide](https://www.google.com/search?q=start+postgresql+in+my+windows+machine&oq=start+postgresql+in+my+windows+machine&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCDYyNjNqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8) | [Linux guide](https://www.google.com/search?q=start+postgresql+in+my+linux+machine&sca_esv=9be980af34470064&sxsrf=ANbL-n4BUiJYGf-CXdITowVL3mHjS4n_tQ%3A1780507296308&ei=oGIgaoLBEveM5OUPxtCx4Ak&biw=1745&bih=952&ved=0ahUKEwiCkarHyuuUAxV3BrkGHUZoDJwQ4dUDCBA&uact=5&oq=start+postgresql+in+my+linux+machine&gs_lp=Egxnd3Mtd2l6LXNlcnAiJHN0YXJ0IHBvc3RncmVzcWwgaW4gbXkgbGludXggbWFjaGluZTIIECEYoAEYwwRItxxQvw5Y3xZwBngBkAEAmAGZAaAB5wSqAQMwLjW4AQPIAQD4AQGYAgugAsUFwgIKEAAYRxjWBBiwA8ICChAhGAoYoAEYwwSYAwCIBgGQBgiSBwM2LjWgB6kRsgcDMC41uAeXBcIHBzAuMi44LjHIBzmACAE&sclient=gws-wiz-serp) | [MacOS guide](https://www.google.com/search?q=start+postgresql+in+my+macos+machine&sca_esv=9be980af34470064&biw=1745&bih=952&sxsrf=ANbL-n44oqo1SRZtVLH7RjdIG7iYPUVsQw%3A1780507307772&ei=q2IgatfuLsqs5OUP8f3UmQc&ved=0ahUKEwiX8OXMyuuUAxVKFrkGHfE-NXMQ4dUDCBA&uact=5&oq=start+postgresql+in+my+macos+machine&gs_lp=Egxnd3Mtd2l6LXNlcnAiJHN0YXJ0IHBvc3RncmVzcWwgaW4gbXkgbWFjb3MgbWFjaGluZTIFEAAY7wUyBRAAGO8FMgUQABjvBTIFEAAY7wVIoxFQ8AlYrQ1wA3gBkAEAmAGaAaABigWqAQMwLjW4AQPIAQD4AQGYAgSgAo4BwgIKEAAYRxjWBBiwA5gDAIgGAZAGCJIHAzMuMaAHqg2yBwMwLjG4B3vCBwUwLjEuM8gHE4AIAQ&sclient=gws-wiz-serp))
+
 - Run this command to initialize project's data:
 
 ```bash
