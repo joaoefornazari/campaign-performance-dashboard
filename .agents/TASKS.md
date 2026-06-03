@@ -314,4 +314,4 @@ Add a filter input that lets the user filter campaigns by minimum ROAS.
 
 ## TASK [2026-06-03T16:58:17]: Logout
 
-Add a logout button on the right top corner of the dashboard header.
+Add a logout button on the right top corner of the dashboard header. Test logout functionality with Vitest.
