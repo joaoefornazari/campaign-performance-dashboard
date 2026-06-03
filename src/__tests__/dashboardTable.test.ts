@@ -1,9 +1,9 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 
 const MOCK_CAMPAIGNS = [
-  { id: 1, name: 'Wrinkle Cream FB', spend: 4200, revenue: 18900, conversions: 312, platform: { id: 1, name: 'Facebook' }, user_id: 1 },
-  { id: 2, name: 'Weight Loss IG', spend: 3100.5, revenue: 8680, conversions: 198, platform: { id: 2, name: 'Instagram' }, user_id: 1 },
-  { id: 3, name: 'Zepbound Google', spend: 5500, revenue: 24750, conversions: 440, platform: { id: 3, name: 'Google' }, user_id: 1 },
+  { id: 1, name: 'Wrinkle Cream FB', spend: 4200, revenue: 18900, conversions: 312, platform: { id: 1, name: 'Facebook' }, user_id: 1, stock_variation: 12.5 },
+  { id: 2, name: 'Weight Loss IG', spend: 3100.5, revenue: 8680, conversions: 198, platform: { id: 2, name: 'Instagram' }, user_id: 1, stock_variation: -3.2 },
+  { id: 3, name: 'Zepbound Google', spend: 5500, revenue: 24750, conversions: 440, platform: { id: 3, name: 'Google' }, user_id: 1, stock_variation: null },
 ];
 
 function setupDom() {
@@ -95,6 +95,37 @@ describe('Dashboard table', () => {
     expect(rows[2].className).toContain('bg-green-100');
   });
 
+  it('renders stock variation column with correct formatting and colors', async () => {
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+
+    const rows = document.querySelectorAll('#campaigns-table-body tr');
+
+    expect(rows[0].children[7].textContent).toBe('+12.50%');
+    expect(rows[0].children[7].className).toContain('text-green-600');
+
+    expect(rows[1].children[7].textContent).toBe('-3.20%');
+    expect(rows[1].children[7].className).toContain('text-red-600');
+
+    expect(rows[2].children[7].textContent).toBe('N/A');
+    expect(rows[2].children[7].className).toContain('text-gray-400');
+  });
+
   it('shows empty message when no campaigns', async () => {
     (global.fetch as any)
       .mockResolvedValueOnce({
@@ -130,7 +161,7 @@ describe('Dashboard table', () => {
 
   it('handles zero spend and zero conversions gracefully', async () => {
     const edgeCampaigns = [
-      { id: 4, name: 'Edge Case', spend: 0, revenue: 0, conversions: 0, platform: { id: 1, name: 'Facebook' }, user_id: 1 },
+      { id: 4, name: 'Edge Case', spend: 0, revenue: 0, conversions: 0, platform: { id: 1, name: 'Facebook' }, user_id: 1, stock_variation: null },
     ];
 
     (global.fetch as any)

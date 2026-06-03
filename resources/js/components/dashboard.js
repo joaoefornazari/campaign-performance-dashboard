@@ -159,6 +159,7 @@ export function initDashboard() {
                 <td class="px-4 py-3 text-sm text-gray-800 text-right">${c.conversions}</td>
                 <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${roas !== null ? roas.toFixed(2) : 'N/A'}</td>
                 <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${cpa !== null ? formatCurrency(cpa) : 'N/A'}</td>
+                <td class="px-4 py-3 text-sm text-right font-semibold ${stockVariationClass(c.stock_variation)}">${formatStockVariation(c.stock_variation)}</td>
             </tr>`;
         }).join('');
     }
@@ -210,6 +211,18 @@ export function initDashboard() {
                 error.classList.remove('hidden');
             }
         }
+    }
+
+    function formatStockVariation(value) {
+        if (value === null || value === undefined) return 'N/A';
+        const sign = value >= 0 ? '+' : '';
+        return `${sign}${value.toFixed(2)}%`;
+    }
+
+    function stockVariationClass(value) {
+        if (value === null || value === undefined) return 'text-gray-400';
+        if (value >= 0) return 'text-green-600';
+        return 'text-red-600';
     }
 
     function formatCurrency(value) {
