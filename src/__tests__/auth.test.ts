@@ -30,4 +30,23 @@ describe('Auth API', () => {
       .send({ email: testUser.email, password: 'wrong' })
       .expect(401);
   });
+
+  it('should rate limit after 5 login attempts per minute', async () => {
+    const maxAttempts = 15;
+    let rateLimited = false;
+
+    for (let i = 0; i < maxAttempts; i++) {
+      const res = await request(server)
+        .post('/api/login')
+        .send({ email: testUser.email, password: testUser.password });
+
+      if (res.status === 429) {
+        expect(res.body).toEqual({ message: 'Too Many Attempts.' });
+        rateLimited = true;
+        break;
+      }
+    }
+
+    expect(rateLimited).toBe(true);
+  });
 });
