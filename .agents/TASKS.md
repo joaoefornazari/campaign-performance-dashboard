@@ -339,6 +339,21 @@ CSVs must have a start_date column. Previous campaigns without it must have this
 
 Generate a CSV with 5 company names that have stock options.
 
-## TASK [2026-06-03T18:19:21]: Update README
+## TASK [2026-06-03T18:19:21]: Update README [DONE]
 
 Update README's usage instructions so they reflect current web app state.
+
+## TASK [2026-06-03T18:38:29]: No stock variation
+
+No stock variation is listed to any of these campaigns:
+
+```csv
+campaign_id,campaign_name,spend,revenue,conversions,platform,company,start_date
+S001,Iphone Launch Campaign,15000.00,75000.00,1200,Facebook,Apple,2026-01-15
+S002,Cybertruck Promo,22000.00,88000.00,450,Google,Tesla,2026-02-01
+S003,Prime Day Campaign,18000.00,126000.00,2100,Instagram,Amazon,2026-03-10
+S004,Quest VR Launch,8500.00,34000.00,680,TikTok,Meta,2026-04-05
+S005,Stranger Things Promo,12000.00,60000.00,950,Facebook,Netflix,2026-05-20
+```
+
+Verify API integration output, then verify how our API handles it and check the cause of this incorrect behavior, and then fix it.
