@@ -226,7 +226,7 @@ Implement a fully functional login screen. After login is successful, user must 
 
 When user goes to web app's root URL, web app must automatically redirect to login page; if user is already authenticated, web app must automatically redirect to dashboard page.
 
-## TASK [2026-06-03T13:01:10]: Import CSV
+## TASK [2026-06-03T13:01:10]: Import CSV [DONE]
 
 Add a Import CSV button that will get a CSV file input by user and will load its data into the database binded to the current user.
 
@@ -245,7 +245,11 @@ If CSV doesn't follow the above structure, it must throw a modal warning user th
 
 If CSV is valid and data is succesfully imported, a alert() must be thrown with a confirmation message.
 
-## TASK []: Table with data
+## TASK [2026-06-03T13:24:47]: Database seeder
+
+Create a database seeder with a small amount of data to insert into database so I can test the UI manually with valid credentials and see it working.
+
+## TASK []: Table with data 
 
 Dashboard page must render a table of all campaigns binded to current user with the following calculated fields:
 	• ROAS (Return on Ad Spend) = campaign revenue ÷ campaign spend
