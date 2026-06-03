@@ -2,6 +2,10 @@
 
 This is a Campaign Performance Dashboard with some insights regarding ad campaign data uploaded by the user.
 
+## DISCLAIMER
+
+In `.agents/TASKS.md`, `TASK [2026-06-03T19:32:00]: Soft-deleted registries` remained as To-Do.
+
 ## Tech Stack
 
 - Front-end: HTML5, CSS3, vanilla Javascript, Tailwind
