@@ -13,6 +13,10 @@ app.use('/api', router);
 // Set Pug as the view engine
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
