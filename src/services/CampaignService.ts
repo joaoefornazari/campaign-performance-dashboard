@@ -61,6 +61,15 @@ export class CampaignService {
     return await this.campaignRepository.restore(campaign);
   }
 
+  async getSummary(userId: number): Promise<{ total_spend: number; total_revenue: number; overall_roas: number | null }> {
+    const data = await this.campaignRepository.getSummaryByUserId(userId);
+    if (!data) {
+      return { total_spend: 0, total_revenue: 0, overall_roas: null };
+    }
+    const overall_roas = data.total_spend > 0 ? data.total_revenue / data.total_spend : null;
+    return { ...data, overall_roas };
+  }
+
   async importFromCsv(csvText: string, userId: number): Promise<{ message: string; count: number }> {
     let records: Record<string, string>[];
     try {

@@ -80,4 +80,21 @@ export class CampaignRepository {
     campaign.deleted_at = null;
     return await this.repo.save(campaign);
   }
+
+  async getSummaryByUserId(userId: number): Promise<{ total_spend: number; total_revenue: number } | null> {
+    const result = await this.repo.createQueryBuilder('campaign')
+      .select('SUM(campaign.spend)', 'total_spend')
+      .addSelect('SUM(campaign.revenue)', 'total_revenue')
+      .where('campaign.user_id = :userId', { userId })
+      .getRawOne();
+
+    if (!result || (!result.total_spend && !result.total_revenue)) {
+      return null;
+    }
+
+    return {
+      total_spend: Number(result.total_spend) || 0,
+      total_revenue: Number(result.total_revenue) || 0,
+    };
+  }
 }

@@ -123,6 +123,18 @@ describe('Campaign API', () => {
             .expect(204);
     });
 
+    it('returns campaign summary with aggregations', async () => {
+        const res = await request(server)
+            .get('/api/campaigns/summary')
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+        expect(res.body).toHaveProperty('total_spend');
+        expect(res.body).toHaveProperty('total_revenue');
+        expect(res.body).toHaveProperty('overall_roas');
+        expect(typeof res.body.total_spend).toBe('number');
+        expect(typeof res.body.total_revenue).toBe('number');
+    });
+
     it('creates a campaign with a name longer than 20 characters', async () => {
         const longName = 'Premium Campaign - Extended Version 2026';
         const res = await request(server)
