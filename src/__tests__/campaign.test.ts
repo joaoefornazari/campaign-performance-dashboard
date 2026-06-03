@@ -66,6 +66,19 @@ describe('Campaign API', () => {
         expect(Array.isArray(res.body.data)).toBe(true);
     });
 
+    it('campaign list includes platform relation', async () => {
+        const res = await request(server)
+            .get('/api/campaigns')
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+        if (res.body.data.length > 0) {
+            const campaign = res.body.data[0];
+            expect(campaign).toHaveProperty('platform');
+            expect(campaign.platform).toHaveProperty('name');
+            expect(campaign.platform).toHaveProperty('id');
+        }
+    });
+
     it('shows a campaign', async () => {
         const id = (global as any).__campaignId;
         const res = await request(server)

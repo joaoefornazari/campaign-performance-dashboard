@@ -10,6 +10,24 @@ block content
         ) Import CSV
       input#csv-file-input.hidden(type="file" accept=".csv")
 
+      #campaigns-section.mt-8
+        h2.text-2xl.font-bold.text-gray-800.mb-4 Your Campaigns
+        #campaigns-loading.text-gray-600 Loading campaigns...
+        #campaigns-error.hidden.text-red-600 Failed to load campaigns.
+        #campaigns-empty.hidden.text-gray-500 No campaigns found.
+        .overflow-x-auto
+          table#campaigns-table.hidden.w-full.bg-white.rounded-lg.shadow
+            thead.bg-gray-200
+              tr
+                th.px-4.py-3.text-left.text-sm.font-semibold.text-gray-700 Campaign Name
+                th.px-4.py-3.text-left.text-sm.font-semibold.text-gray-700 Platform
+                th.px-4.py-3.text-right.text-sm.font-semibold.text-gray-700 Spend
+                th.px-4.py-3.text-right.text-sm.font-semibold.text-gray-700 Revenue
+                th.px-4.py-3.text-right.text-sm.font-semibold.text-gray-700 Conversions
+                th.px-4.py-3.text-right.text-sm.font-semibold.text-gray-700 ROAS
+                th.px-4.py-3.text-right.text-sm.font-semibold.text-gray-700 CPA
+            tbody#campaigns-table-body
+
       #modal.hidden.fixed.inset-0.bg-gray-900.bg-opacity-50.flex.items-center.justify-center
         .bg-white.p-6.rounded-lg.shadow-lg.max-w-md.w-full
           h2.text-xl.font-bold.text-red-600.mb-4 Import Error

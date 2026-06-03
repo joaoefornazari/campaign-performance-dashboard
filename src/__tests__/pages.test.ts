@@ -17,9 +17,13 @@ describe('Pages', () => {
     expect(res.text).toContain('password');
   });
 
-  it('GET /dashboard should render dashboard page', async () => {
+  it('GET /dashboard should render dashboard page with campaign table', async () => {
     const res = await request(server).get('/dashboard');
     expect(res.status).toBe(200);
     expect(res.text).toContain('Welcome!');
+    expect(res.text).toContain('campaigns-table');
+    expect(res.text).toContain('ROAS');
+    expect(res.text).toContain('CPA');
+    expect(res.text).toContain('Your Campaigns');
   });
 });

@@ -13,7 +13,11 @@ export class CampaignController {
     constructor(private readonly service = new CampaignService()) { }
 
     async index(req: Request, res: Response) {
-        const result = await this.service.findAllPaginated(req.query);
+        const queryParams: any = { ...req.query };
+        if (!queryParams.user_id) {
+            queryParams.user_id = req.user!.id;
+        }
+        const result = await this.service.findAllPaginated(queryParams);
         return res.json(result);
     }
 
