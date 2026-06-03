@@ -31,15 +31,17 @@ export class StockService {
     const company = await this.companyRepo.findById(companyId);
     if (!company) return null;
 
-    if (company.ticker_symbol) return company.ticker_symbol;
-
     const override = TICKER_OVERRIDES[company.name];
     if (override) {
-      company.ticker_symbol = override;
-      await this.companyRepo.update(company, { ticker_symbol: override });
-      console.log(`[StockService] Using ticker override: ${company.name} -> ${override}`);
+      if (company.ticker_symbol !== override) {
+        company.ticker_symbol = override;
+        await this.companyRepo.update(company, { ticker_symbol: override });
+        console.log(`[StockService] Applied ticker override: ${company.name} -> ${override} (was ${company.ticker_symbol ?? 'none'})`);
+      }
       return override;
     }
+
+    if (company.ticker_symbol) return company.ticker_symbol;
 
     const apiKey = this.getApiKey();
     const url = `${ALPHAVANTAGE_BASE}?function=SYMBOL_SEARCH&keywords=${encodeURIComponent(company.name)}&apikey=${apiKey}`;
