@@ -4,17 +4,17 @@ import { UserService } from '../services/UserService.js';
 import { UserRole } from '../enums/UserRole.js';
 import { beforeAll, describe, expect, it } from 'vitest';
 
-const VALID_CSV = `campaign_id,campaign_name,spend,revenue,conversions,platform,company
-C001,Wrinkle Cream FB,4200.00,18900.00,312,Facebook,BeautyInc
-C002,Weight Loss IG,3100.50,8680.00,198,Instagram,BeautyInc
-C003,Zepbound Google,5500.00,24750.00,440,Google,PharmaCorp
+const VALID_CSV = `campaign_id,campaign_name,spend,revenue,conversions,platform,company,start_date
+C001,Wrinkle Cream FB,4200.00,18900.00,312,Facebook,BeautyInc,2025-06-01
+C002,Weight Loss IG,3100.50,8680.00,198,Instagram,BeautyInc,2025-08-15
+C003,Zepbound Google,5500.00,24750.00,440,Google,PharmaCorp,2025-11-20
 `;
 
 const WRONG_HEADER_CSV = `id,name,spend,revenue,conversions,platform
 1,Wrinkle Cream FB,4200.00,18900.00,312,Facebook
 `;
 
-const EMPTY_CSV = `campaign_id,campaign_name,spend,revenue,conversions,platform,company
+const EMPTY_CSV = `campaign_id,campaign_name,spend,revenue,conversions,platform,company,start_date
 `;
 
 describe('CSV Import', () => {
@@ -96,8 +96,8 @@ describe('CSV Import', () => {
     });
 
     it('creates platforms from CSV when they do not exist', async () => {
-        const uniqueCsv = `campaign_id,campaign_name,spend,revenue,conversions,platform,company
-X001,New Platform Test,1000.00,5000.00,50,UniquePlatformXYZ,TestCorp
+        const uniqueCsv = `campaign_id,campaign_name,spend,revenue,conversions,platform,company,start_date
+X001,New Platform Test,1000.00,5000.00,50,UniquePlatformXYZ,TestCorp,2026-01-01
 `;
 
         const res = await request(server)
@@ -118,8 +118,8 @@ X001,New Platform Test,1000.00,5000.00,50,UniquePlatformXYZ,TestCorp
     });
 
     it('binds imported campaigns to the authenticated user', async () => {
-        const userSpecificCsv = `campaign_id,campaign_name,spend,revenue,conversions,platform,company
-U001,UserSpecificTest,2000.00,8000.00,100,Facebook,TestCorp
+        const userSpecificCsv = `campaign_id,campaign_name,spend,revenue,conversions,platform,company,start_date
+U001,UserSpecificTest,2000.00,8000.00,100,Facebook,TestCorp,2026-03-01
 `;
 
         const importRes = await request(server)

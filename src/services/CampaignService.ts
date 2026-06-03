@@ -5,7 +5,7 @@ import { CompanyService } from './CompanyService.js';
 import { StockService } from './StockService.js';
 import { parse } from 'csv-parse/sync';
 
-const EXPECTED_CSV_HEADERS = ['campaign_id', 'campaign_name', 'spend', 'revenue', 'conversions', 'platform', 'company'];
+const EXPECTED_CSV_HEADERS = ['campaign_id', 'campaign_name', 'spend', 'revenue', 'conversions', 'platform', 'company', 'start_date'];
 
 export class CampaignService {
   constructor(
@@ -135,6 +135,17 @@ export class CampaignService {
         throw { status: 422, message: `Invalid conversions value for campaign "${name}".` };
       }
 
+      let startDatetime: Date;
+      const rawDate = (row.start_date || '').trim();
+      if (rawDate) {
+        startDatetime = new Date(rawDate);
+        if (isNaN(startDatetime.getTime())) {
+          throw { status: 422, message: `Invalid start_date "${rawDate}" for campaign "${name}".` };
+        }
+      } else {
+        startDatetime = new Date();
+      }
+
       const platformName = row.platform.trim();
       if (platformName.length < 2 || platformName.length > 20) {
         throw { status: 422, message: `Platform name "${platformName}" must be between 2 and 20 characters.` };
@@ -161,7 +172,7 @@ export class CampaignService {
         user_id: userId,
         company_id: companyId,
         external_id: row.campaign_id.trim(),
-        start_datetime: new Date(),
+        start_datetime: startDatetime,
       });
 
       if (companyId) {
