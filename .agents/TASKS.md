@@ -343,7 +343,7 @@ Generate a CSV with 5 company names that have stock options.
 
 Update README's usage instructions so they reflect current web app state.
 
-## TASK [2026-06-03T18:38:29]: No stock variation
+## TASK [2026-06-03T18:38:29]: No stock variation [DONE]
 
 No stock variation is listed to any of these campaigns:
 
@@ -357,3 +357,7 @@ S005,Stranger Things Promo,12000.00,60000.00,950,Facebook,Netflix,2026-05-20
 ```
 
 Verify API integration output, then verify how our API handles it and check the cause of this incorrect behavior, and then fix it.
+
+## TASK [2026-06-03T19:23:02]: Soft and Hard deletes on UI
+
+Implement soft and hard deletes as buttons appended to each campaign row so standard user can soft-delete campaigns and admin users can soft-delete and hard-delete campaigns.
