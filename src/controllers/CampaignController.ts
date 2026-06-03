@@ -16,7 +16,7 @@ export class CampaignController {
     }
 
     async show(req: Request, res: Response) {
-        const campaign = this.service.findById(Number(req.params.id));
+        const campaign = await this.service.findById(Number(req.params.id));
         if (!campaign) return res.status(404).json({ message: 'Campaign not found' });
         return res.json(campaign);
     }

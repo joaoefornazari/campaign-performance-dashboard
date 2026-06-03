@@ -53,7 +53,7 @@ describe('User Role Authorization (admin gate)', () => {
         const res = await request(server)
             .post('/api/users')
             .set('Authorization', `Bearer ${adminToken}`)
-            .send({ name: 'Tmp', email: 'tmp@example.com', password: 'tmp123' })
+            .send({ name: 'Tmp', email: 'tmp@example.com', password: 'tmp12345' })
             .expect(201);
         const id = res.body.id;
 
@@ -67,7 +67,7 @@ describe('User Role Authorization (admin gate)', () => {
         const res = await request(server)
             .post('/api/users')
             .set('Authorization', `Bearer ${adminToken}`)
-            .send({ name: 'Tmp2', email: 'tmp2@example.com', password: 'tmp123' })
+            .send({ name: 'Tmp2', email: 'tmp2@example.com', password: 'tmp12345' })
             .expect(201);
         const id = res.body.id;
 

@@ -11,16 +11,16 @@ export class PersonalAccessToken {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ default: 'App\\Models\\User' })
+  @Column({ type: 'varchar', default: 'App\\Models\\User' })
   tokenable_type!: string;
 
-  @Column({ name: 'tokenable_id' })
+  @Column({ type: 'integer', name: 'tokenable_id' })
   tokenable_id!: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   name!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   token!: string;
 
   @Column({ type: 'text', nullable: true })

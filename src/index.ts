@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
+import { AppDataSource } from './database/data-source.js';
 import router from './routes/api.js';
 
 const app = express();
@@ -29,10 +30,13 @@ app.get('/', (_req, res) => {
   res.render('index', { assets: manifest });
 });
 
-
-const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  AppDataSource.initialize().then(() => {
+    const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is running at http://localhost:${PORT}`);
+    });
+  });
+}
 
 export default app;

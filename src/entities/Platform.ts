@@ -16,7 +16,7 @@ export class Platform {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ length: 20 })
+  @Column({ type: 'varchar', length: 20 })
   name!: string;
 
   @CreateDateColumn({ name: 'created_at', nullable: true })

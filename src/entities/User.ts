@@ -17,19 +17,19 @@ export class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   name!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   email!: string;
 
   @Column({ type: 'timestamp', nullable: true })
   email_verified_at?: Date | null;
 
-  @Column()
+  @Column({ type: 'varchar' })
   password!: string;
 
-  @Column({ name: 'remember_token', nullable: true })
+  @Column({ type: 'varchar', name: 'remember_token', nullable: true })
   remember_token?: string | null;
 
   @Column({

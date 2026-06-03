@@ -21,7 +21,7 @@ export class Campaign {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ length: 20 })
+  @Column({ type: 'varchar', length: 20 })
   name!: string;
 
   @Column({ type: 'float' })
@@ -33,10 +33,10 @@ export class Campaign {
   @Column({ type: 'integer' })
   conversions!: number;
 
-  @Column({ name: 'platform_id' })
+  @Column({ type: 'integer', name: 'platform_id' })
   platform_id!: number;
 
-  @Column({ name: 'user_id' })
+  @Column({ type: 'integer', name: 'user_id' })
   user_id!: number;
 
   @CreateDateColumn({ name: 'created_at', nullable: true })

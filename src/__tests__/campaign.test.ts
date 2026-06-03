@@ -3,17 +3,20 @@ import request from 'supertest';
 import { server } from './setup.js';
 import { UserService } from '../services/UserService.js';
 import { UserRole } from '../enums/UserRole.js';
+import { PlatformService } from '../services/PlatformService.js';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 describe('Campaign API', () => {
     let token: string;
+    let platformId: number;
+    let userId: number;
     const payload = {
         name: 'Test Campaign',
         spend: 1000,
         revenue: 5000,
         conversions: 20,
-        platform_id: 1,
-        user_id: 1,
+        platform_id: 0,
+        user_id: 0,
     };
 
     beforeAll(async () => {
@@ -29,6 +32,15 @@ describe('Campaign API', () => {
                 role: UserRole.Admin,
             });
         }
+        userId = admin.id;
+
+        const platformService = new PlatformService();
+        const platform = await platformService.create({ name: 'Test Platform' });
+        platformId = platform.id;
+
+        payload.platform_id = platformId;
+        payload.user_id = userId;
+
         const login = await request(server)
             .post('/api/login')
             .send({ email: adminEmail, password: adminPass })
