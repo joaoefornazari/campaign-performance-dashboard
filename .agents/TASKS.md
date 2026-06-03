@@ -308,7 +308,7 @@ Pinpoint the cause of this misbehavior so I can plan next task.
 
 Include a summary bar at the top showing: Total Spend, Total Revenue, and Overall ROAS
 
-## TASK [2026-06-03T16:44:43]: Filter
+## TASK [2026-06-03T16:44:43]: Filter [DONE]
 
 Add a filter input that lets the user filter campaigns by minimum ROAS.
 
