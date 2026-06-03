@@ -253,9 +253,29 @@ Create a database seeder with a small amount of data to insert into database so 
 
 Update max campaign name character limit to 200 characters. Make a migration and ensure that the character limit is updated in the database.
 
-## TASK []: Table with data 
+## TASK [2026-06-03T14:13:24]: Table with data [DONE]
 
 Dashboard page must render a table of all campaigns binded to current user with the following calculated fields:
 	• ROAS (Return on Ad Spend) = campaign revenue ÷ campaign spend
 	• CPA (Cost Per Acquisition) = campaign spend ÷ campaign conversions
     • Color-code rows: green if ROAS ≥ 3.0, yellow if 1.5–2.99, red if < 1.5
+
+## TASK [2026-06-03T14:22:16]: Error on running server [DONE]
+
+When I manually ran `npm run dev:backend`, I got the following error:
+
+```bash
+Migration failed: CannotConnectAlreadyConnectedError: Cannot create a "default" connection because connection to the database already established.
+    at DataSource.initialize (/home/joaoe/Documentos/Testes/skyhouse-techinical-assessment/parts/1/node_modules/typeorm/data-source/src/data-source/DataSource.ts:251:19)
+    at runMigrations (/home/joaoe/Documentos/Testes/skyhouse-techinical-assessment/parts/1/src/database/migrations/run.ts:5:44)
+    at <anonymous> (/home/joaoe/Documentos/Testes/skyhouse-techinical-assessment/parts/1/src/database/migrations/run.ts:11:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async tryToImport (/home/joaoe/Documentos/Testes/skyhouse-techinical-assessment/parts/1/node_modules/typeorm/util/src/util/ImportUtils.ts:13:13)
+    at async <anonymous> (/home/joaoe/Documentos/Testes/skyhouse-techinical-assessment/parts/1/node_modules/typeorm/util/src/util/DirectoryExportedClassesLoader.ts:57:45)
+    at async Promise.all (index 0)
+    at async importClassesFromDirectories (/home/joaoe/Documentos/Testes/skyhouse-techinical-assessment/parts/1/node_modules/typeorm/util/src/util/DirectoryExportedClassesLoader.ts:63:18)
+    at async ConnectionMetadataBuilder.buildMigrations (/home/joaoe/Documentos/Testes/skyhouse-techinical-assessment/parts/1/node_modules/typeorm/connection/src/connection/ConnectionMetadataBuilder.ts:38:17)
+```
+
+Please check its cause and fix it.

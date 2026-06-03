@@ -1,6 +1,6 @@
 {
     "rules": "./.agents/INSTRUCTIONS.json",
     "tasks": "./.agents/TASKS.md",
-    "task-timestamp": "",
+    "task-timestamp": "2026-06-03T14:22:16",
     "execute-task": "specified-timestamp-only"
 }
