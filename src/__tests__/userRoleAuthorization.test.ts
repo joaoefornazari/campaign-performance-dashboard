@@ -8,6 +8,7 @@ import { beforeAll, describe, it } from 'vitest';
 describe('User Role Authorization (admin gate)', () => {
     let adminToken: string;
     let userToken: string;
+    const emailSuffix = Date.now();
 
     beforeAll(async () => {
         const userService = new UserService();
@@ -53,7 +54,7 @@ describe('User Role Authorization (admin gate)', () => {
         const res = await request(server)
             .post('/api/users')
             .set('Authorization', `Bearer ${adminToken}`)
-            .send({ name: 'Tmp', email: 'tmp@example.com', password: 'tmp12345' })
+            .send({ name: 'Tmp', email: `tmp-${emailSuffix}@example.com`, password: 'tmp12345' })
             .expect(201);
         const id = res.body.id;
 
@@ -67,7 +68,7 @@ describe('User Role Authorization (admin gate)', () => {
         const res = await request(server)
             .post('/api/users')
             .set('Authorization', `Bearer ${adminToken}`)
-            .send({ name: 'Tmp2', email: 'tmp2@example.com', password: 'tmp12345' })
+            .send({ name: 'Tmp2', email: `tmp2-${emailSuffix}@example.com`, password: 'tmp12345' })
             .expect(201);
         const id = res.body.id;
 

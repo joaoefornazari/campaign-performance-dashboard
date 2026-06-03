@@ -19,6 +19,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD || '',
   database: dbDatabase,
   synchronize: isTest, // Auto sync schema in test mode
+  dropSchema: isTest, // Drop schema in test mode for a clean state
   logging: false,
   entities: [User, Platform, Campaign, PersonalAccessToken],
   migrations: [],
