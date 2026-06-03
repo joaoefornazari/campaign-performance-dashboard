@@ -199,3 +199,6 @@ Double-check if there is nothing missing above that the web app requires to keep
 
 You will check if migration was successful. Node files are inside `./src`. Laravel files are everything outside of it. Compare the tech migration directives and your output will be a list of all functionalities' succesfully migrated. If there are failures, list them with detail and bring a fix plan.
 
+## TASK [2026-06-03T03:27:43]: Test Suite fix
+
+Node test suite is getting errors. Run the test suite, make a fix plan and execute the fix plan. Goal: web app functionalities are working as intended.
