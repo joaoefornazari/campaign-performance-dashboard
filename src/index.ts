@@ -13,21 +13,40 @@ app.use('/api', router);
 // Set Pug as the view engine
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// Root route renders the main view with Vite assets (if manifest exists)
-app.get('/', (_req, res) => {
-  let manifest: Record<string, any> = {};
+function readManifest(): Record<string, any> {
   try {
-    const manifestPath = path.resolve(__dirname, '../build/manifest.json');
+    const manifestPath = path.resolve(__dirname, '../build/.vite/manifest.json');
     const raw = fs.readFileSync(manifestPath, 'utf-8');
-    manifest = JSON.parse(raw);
-  } catch (e) {
-    // ignore if manifest not present (dev mode)
+    return JSON.parse(raw);
+  } catch {
+    return {};
   }
-  res.render('index', { assets: manifest });
+}
+
+// Static files from Vite build
+app.use('/assets', express.static(path.resolve(__dirname, '../build/assets')));
+
+// Root route redirects to login (or dashboard if already authenticated — handled client-side)
+app.get('/', (_req, res) => {
+  res.redirect('/login');
+});
+
+// Login page
+app.get('/login', (_req, res) => {
+  res.render('login', { assets: readManifest() });
+});
+
+// Dashboard page
+app.get('/dashboard', (_req, res) => {
+  res.render('dashboard', { assets: readManifest() });
 });
 
 if (process.env.NODE_ENV !== 'test') {

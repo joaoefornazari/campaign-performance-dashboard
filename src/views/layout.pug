@@ -4,12 +4,10 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title Skyhouse Dashboard
-    //- Include CSS from Vite manifest if available
     if assets && assets['src/main.ts'] && assets['src/main.ts'].css
       each cssFile in assets['src/main.ts'].css
         link(rel='stylesheet' href=cssFile)
   body
     block content
-    //- Include JS entry point from Vite manifest if available
     if assets && assets['src/main.ts'] && assets['src/main.ts'].file
       script(type='module' src=assets['src/main.ts'].file)
