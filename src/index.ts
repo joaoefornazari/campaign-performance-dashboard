@@ -17,17 +17,32 @@ import fs from 'fs';
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+function readManifest(): Record<string, any> {
+  try {
+    const manifestPath = path.resolve(__dirname, '../build/.vite/manifest.json');
+    const raw = fs.readFileSync(manifestPath, 'utf-8');
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+// Static files from Vite build
+app.use('/assets', express.static(path.resolve(__dirname, '../build/assets')));
+
 // Root route renders the main view with Vite assets (if manifest exists)
 app.get('/', (_req, res) => {
-  let manifest: Record<string, any> = {};
-  try {
-    const manifestPath = path.resolve(__dirname, '../build/manifest.json');
-    const raw = fs.readFileSync(manifestPath, 'utf-8');
-    manifest = JSON.parse(raw);
-  } catch (e) {
-    // ignore if manifest not present (dev mode)
-  }
-  res.render('index', { assets: manifest });
+  res.render('index', { assets: readManifest() });
+});
+
+// Login page
+app.get('/login', (_req, res) => {
+  res.render('login', { assets: readManifest() });
+});
+
+// Dashboard page
+app.get('/dashboard', (_req, res) => {
+  res.render('dashboard', { assets: readManifest() });
 });
 
 if (process.env.NODE_ENV !== 'test') {

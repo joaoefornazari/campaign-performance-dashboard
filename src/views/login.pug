@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  .min-h-screen.flex.items-center.justify-center.bg-gray-100
+    .w-full.max-w-md.bg-white.rounded-lg.shadow-md.p-8
+      h2.text-2xl.font-bold.text-center.text-gray-800.mb-6 Sign in to your account
+
+      #login-error.bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded.mb-4.hidden(role="alert")
+
+      form#login-form
+        .mb-4
+          label.block.text-gray-700.text-sm.font-bold.mb-2(for="email") Email
+          input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.shadow-sm(
+            type="email"
+            placeholder="your@email.com"
+            required
+          )
+        .mb-6
+          label.block.text-gray-700.text-sm.font-bold.mb-2(for="password") Password
+          input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.shadow-sm(
+            type="password"
+            placeholder="••••••••"
+            required
+          )
+        button.w-full.bg-blue-600.text-white.font-bold.py-2.px-4.rounded-md(
+          type="submit"
+        ) Sign in
