@@ -58,4 +58,8 @@ export class UserService {
     }
     return await this.userRepository.restore(user);
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findByEmail(email);
+  }
 }
