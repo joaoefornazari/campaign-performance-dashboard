@@ -199,6 +199,10 @@ Double-check if there is nothing missing above that the web app requires to keep
 
 You will check if migration was successful. Node files are inside `./src`. Laravel files are everything outside of it. Compare the tech migration directives and your output will be a list of all functionalities' succesfully migrated. If there are failures, list them with detail and bring a fix plan.
 
-## TASK [2026-06-03T03:27:43]: Test Suite fix
+## TASK [2026-06-03T03:27:43]: Test Suite fix [DONE]
 
 Node test suite is getting errors. Run the test suite, make a fix plan and execute the fix plan. Goal: web app functionalities are working as intended.
+
+## TASK [2026-06-03T03:36:20]: Login stress tes (again)
+
+Add to `./src/__tests__/auth.test.ts` a stress test to validate rate limit applied on `/api/login` endpoint.
