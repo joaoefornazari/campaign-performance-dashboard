@@ -222,7 +222,7 @@ Find error cause and fix it, please.
 
 Implement a fully functional login screen. After login is successful, user must go to dashboard page, which will only render "Welcome!" in title-like font size.
 
-# TASK [2026-06-03T04:41:42]: Redirect to Login
+# TASK [2026-06-03T04:41:42]: Redirect to Login [DONE]
 
 When user goes to web app's root URL, web app must automatically redirect to login page; if user is already authenticated, web app must automatically redirect to dashboard page.
 
