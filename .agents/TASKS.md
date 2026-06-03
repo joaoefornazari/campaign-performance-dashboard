@@ -304,6 +304,14 @@ C005,Tirzepatide — FB Retargeting,1800.00,9540.00,156,Facebook
 
 Pinpoint the cause of this misbehavior so I can plan next task.
 
-## TASK [2026-06-03T16:17:46]: ???
+## TASK [2026-06-03T16:17:46]: Summary bar
 
-???
+Include a summary bar at the top showing: Total Spend, Total Revenue, and Overall ROAS
+
+## TASK []: Filter
+
+Add a filter input that lets the user filter campaigns by minimum ROAS.
+
+## TASK []: Logout
+
+Add a logout button on the right top corner of the dashboard header.
