@@ -304,6 +304,6 @@ C005,Tirzepatide — FB Retargeting,1800.00,9540.00,156,Facebook
 
 Pinpoint the cause of this misbehavior so I can plan next task.
 
-## TASK [2026-06-03T16:17:46]: Reload table after CSV import
+## TASK [2026-06-03T16:17:46]: ???
 
-After the import success alert, call loadCampaigns(token) again to refresh the table.
+???
