@@ -218,12 +218,36 @@ Error: expected 201 "Created", got 500 "Internal Server Error"
 
 Find error cause and fix it, please.
 
-# TASK [2026-06-03T04:09:12]: Login screen
+# TASK [2026-06-03T04:09:12]: Login screen [DONE]
 
 Implement a fully functional login screen. After login is successful, user must go to dashboard page, which will only render "Welcome!" in title-like font size.
 
+# TASK [2026-06-03T04:41:42]: Redirect to Login
+
+When user goes to web app's root URL, web app must automatically redirect to login page; if user is already authenticated, web app must automatically redirect to dashboard page.
+
+# TASK []: Import CSV
+
+Add a Import CSV button that will get a CSV file input by user and will load its data into the database binded to the current user.
+
+Example of valid CSV:
+
+```csv
+campaign_id,campaign_name,spend,revenue,conversions,platform
+C001,Wrinkle Cream — FB Broad,4200.00,18900.00,312,Facebook
+C002,Weight Loss — IG Stories,3100.50,8680.00,198,Instagram
+C003,Zepbound — Google Search,5500.00,24750.00,440,Google
+C004,Collagen — TikTok,2200.00,4840.00,87,TikTok
+C005,Tirzepatide — FB Retargeting,1800.00,9540.00,156,Facebook
+```
+
+If CSV doesn't follow the above structure, it must throw a modal warning user that the CSV is invalid and cancel importing data.
+
+If CSV is valid and data is succesfully imported, a alert() must be thrown with a confirmation message.
+
 # TASK []: Table with data
-On a table of all campaigns with the following calculated fields:
+
+Dashboard page must render a table of all campaigns binded to current user with the following calculated fields:
 	• ROAS (Return on Ad Spend) = campaign revenue ÷ campaign spend
 	• CPA (Cost Per Acquisition) = campaign spend ÷ campaign conversions
     • Color-code rows: green if ROAS ≥ 3.0, yellow if 1.5–2.99, red if < 1.5
