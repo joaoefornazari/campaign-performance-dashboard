@@ -148,6 +148,9 @@
             "Node best practices",
             "Express best practices"
         ],        
-        "execute-multiple-tasks-at-once": false
+        "task-execution": "single",
+        "readonly-files": [
+            ".agents/*"
+        ]
     }
 }
