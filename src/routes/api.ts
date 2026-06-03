@@ -44,6 +44,9 @@ router.delete('/campaigns/:id', authMiddleware, ...new CampaignController().dest
 router.delete('/campaigns/:id/force', authMiddleware, ...new CampaignController().forceDelete);
 router.post('/campaigns/:id/restore', authMiddleware, ...new CampaignController().restore);
 
+// CSV import route (protected)
+router.post('/campaigns/import', authMiddleware, ...new CampaignController().importCsv);
+
 // Error handling (must be last)
 router.use(errorHandler);
 

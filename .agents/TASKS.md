@@ -1,6 +1,6 @@
 # TASKS
 
-Note: timestamps were obtained from [utctime.net](https://www.utctime.net/) from UTC0. My timezone is UTC-3.
+### **IMPORTANT**: timestamps were obtained from [utctime.net](https://www.utctime.net/) from UTC0. My timezone is UTC-3.
 
 ## TASK [2026-06-02T15:00:28]: Bootstrap project [DONE]
 
@@ -218,15 +218,15 @@ Error: expected 201 "Created", got 500 "Internal Server Error"
 
 Find error cause and fix it, please.
 
-# TASK [2026-06-03T04:09:12]: Login screen [DONE]
+## TASK [2026-06-03T04:09:12]: Login screen [DONE]
 
 Implement a fully functional login screen. After login is successful, user must go to dashboard page, which will only render "Welcome!" in title-like font size.
 
-# TASK [2026-06-03T04:41:42]: Redirect to Login [DONE]
+## TASK [2026-06-03T04:41:42]: Redirect to Login [DONE]
 
 When user goes to web app's root URL, web app must automatically redirect to login page; if user is already authenticated, web app must automatically redirect to dashboard page.
 
-# TASK []: Import CSV
+## TASK [2026-06-03T13:01:10]: Import CSV
 
 Add a Import CSV button that will get a CSV file input by user and will load its data into the database binded to the current user.
 
@@ -245,7 +245,7 @@ If CSV doesn't follow the above structure, it must throw a modal warning user th
 
 If CSV is valid and data is succesfully imported, a alert() must be thrown with a confirmation message.
 
-# TASK []: Table with data
+## TASK []: Table with data
 
 Dashboard page must render a table of all campaigns binded to current user with the following calculated fields:
 	• ROAS (Return on Ad Spend) = campaign revenue ÷ campaign spend

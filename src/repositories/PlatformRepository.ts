@@ -1,8 +1,15 @@
 import { AppDataSource } from '../database/data-source.js';
 import { Platform } from '../entities/Platform.js';
+import { ILike } from 'typeorm';
 
 export class PlatformRepository {
   private repo = AppDataSource.getRepository(Platform);
+
+  async findByName(name: string): Promise<Platform | null> {
+    return await this.repo.findOne({
+      where: { name: ILike(name) }
+    });
+  }
 
   async create(data: Partial<Platform>): Promise<Platform> {
     const platform = this.repo.create(data);
