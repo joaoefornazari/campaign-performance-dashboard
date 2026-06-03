@@ -5,9 +5,13 @@ block content
     .container.mx-auto.px-4.py-8
       .flex.items-center.justify-between.mb-8
         h1#welcome-message.text-4xl.font-bold.text-gray-800 Welcome!
-        button#import-csv-btn.bg-blue-600.text-white.px-4.py-2.rounded-lg.shadow(
-          class="hover:bg-blue-700"
-        ) Import CSV
+        .flex.items-center.gap-3
+          button#import-csv-btn.bg-blue-600.text-white.px-4.py-2.rounded-lg.shadow(
+            class="hover:bg-blue-700"
+          ) Import CSV
+          button#logout-btn.bg-red-600.text-white.px-4.py-2.rounded-lg.shadow(
+            class="hover:bg-red-700"
+          ) Logout
       input#csv-file-input.hidden(type="file" accept=".csv")
 
       #summary-bar.flex.flex-row.flex-wrap.gap-4.mb-8
