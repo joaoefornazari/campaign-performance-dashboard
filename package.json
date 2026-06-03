@@ -6,6 +6,7 @@
         "dev": "vite",
         "dev:backend": "tsx watch src/index.ts",
         "start:backend": "node dist/src/index.js",
+        "seed": "tsx src/database/seeders/seed.ts",
         "test": "vitest run"
     },
     "devDependencies": {
