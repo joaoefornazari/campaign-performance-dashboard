@@ -207,7 +207,7 @@ Node test suite is getting errors. Run the test suite, make a fix plan and execu
 
 Add to `./src/__tests__/auth.test.ts` a stress test to validate rate limit applied on `/api/login` endpoint.
 
-## TASK [2026-06-03T03:45:01]: Failure on UserRoleAuthorization test
+## TASK [2026-06-03T03:45:01]: Failure on UserRoleAuthorization test [DONE]
 
 Output of `npm test`:
 
@@ -217,3 +217,13 @@ Error: expected 201 "Created", got 500 "Internal Server Error"
 ```
 
 Find error cause and fix it, please.
+
+# TASK [2026-06-03T04:09:12]: Login screen
+
+Implement a fully functional login screen. After login is successful, user must go to dashboard page, which will only render "Welcome!" in title-like font size.
+
+# TASK []: Table with data
+On a table of all campaigns with the following calculated fields:
+	• ROAS (Return on Ad Spend) = campaign revenue ÷ campaign spend
+	• CPA (Cost Per Acquisition) = campaign spend ÷ campaign conversions
+    • Color-code rows: green if ROAS ≥ 3.0, yellow if 1.5–2.99, red if < 1.5
