@@ -1,10 +1,15 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { User } from '../entities/User.js';
 import { Platform } from '../entities/Platform.js';
 import { Campaign } from '../entities/Campaign.js';
 import { PersonalAccessToken } from '../entities/PersonalAccessToken.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -22,6 +27,6 @@ export const AppDataSource = new DataSource({
   dropSchema: isTest, // Drop schema in test mode for a clean state
   logging: false,
   entities: [User, Platform, Campaign, PersonalAccessToken],
-  migrations: [],
+  migrations: isTest ? [] : [path.join(__dirname, 'migrations/*.ts')],
   subscribers: [],
 });

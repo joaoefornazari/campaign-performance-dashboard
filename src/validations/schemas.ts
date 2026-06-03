@@ -28,7 +28,7 @@ export const UpdatePlatformSchema = z.object({
 });
 
 export const StoreCampaignSchema = z.object({
-  name: z.string().min(10, 'The name must be at least 10 characters.').max(20),
+  name: z.string().min(10, 'The name must be at least 10 characters.').max(200),
   spend: z.number().min(0, 'The spend must be at least 0.'),
   revenue: z.number().min(0, 'The revenue must be at least 0.'),
   conversions: z.number().int().min(0, 'The conversions must be at least 0.'),
@@ -37,7 +37,7 @@ export const StoreCampaignSchema = z.object({
 });
 
 export const UpdateCampaignSchema = z.object({
-  name: z.string().min(10, 'The name must be at least 10 characters.').max(20).optional(),
+  name: z.string().min(10, 'The name must be at least 10 characters.').max(200).optional(),
   spend: z.number().min(0, 'The spend must be at least 0.').optional(),
   revenue: z.number().min(0, 'The revenue must be at least 0.').optional(),
   conversions: z.number().int().min(0, 'The conversions must be at least 0.').optional(),

@@ -86,10 +86,10 @@ export class CampaignService {
 
     for (const row of records) {
       const name = row.campaign_name.trim();
-      if (name.length < 10 || name.length > 20) {
+      if (name.length < 10 || name.length > 200) {
         throw {
           status: 422,
-          message: `Campaign name "${name}" must be between 10 and 20 characters.`
+          message: `Campaign name "${name}" must be between 10 and 200 characters.`
         };
       }
 
