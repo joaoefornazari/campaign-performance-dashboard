@@ -75,4 +75,25 @@ class AuthTest extends TestCase
 
         $response->assertStatus(401);
     }
+
+    public function test_login_rate_limit_is_enforced(): void
+    {
+        $user = User::factory()->create([
+            'password' => bcrypt('password123'),
+        ]);
+
+        for ($i = 0; $i < 5; $i++) {
+            $response = $this->postJson('/api/login', [
+                'email' => $user->email,
+                'password' => 'wrongpassword',
+            ]);
+            $response->assertStatus(401);
+        }
+
+        $response = $this->postJson('/api/login', [
+            'email' => $user->email,
+            'password' => 'wrongpassword',
+        ]);
+        $response->assertStatus(429);
+    }
 }
