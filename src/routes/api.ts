@@ -37,6 +37,7 @@ router.post('/platforms/:id/restore', authMiddleware, ...new PlatformController(
 
 // Campaign routes (protected)
 router.get('/campaigns', authMiddleware, (req, res) => new CampaignController().index(req, res));
+router.get('/campaigns/summary', authMiddleware, (req, res) => new CampaignController().summary(req, res));
 router.get('/campaigns/:id', authMiddleware, (req, res) => new CampaignController().show(req, res));
 router.post('/campaigns', authMiddleware, ...new CampaignController().store);
 router.put('/campaigns/:id', authMiddleware, ...new CampaignController().update);

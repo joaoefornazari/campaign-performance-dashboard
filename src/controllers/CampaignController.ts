@@ -70,6 +70,11 @@ export class CampaignController {
         },
     ];
 
+    async summary(req: Request, res: Response) {
+        const result = await this.service.getSummary(req.user!.id);
+        return res.json(result);
+    }
+
     importCsv = [
         async (req: Request, res: Response) => {
             try {

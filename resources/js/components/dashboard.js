@@ -75,6 +75,31 @@ export function initDashboard() {
     }
 
     loadCampaigns(token);
+    loadSummary(token);
+
+    async function loadSummary(token) {
+        const totalSpendEl = document.getElementById('total-spend');
+        const totalRevenueEl = document.getElementById('total-revenue');
+        const overallRoasEl = document.getElementById('overall-roas');
+
+        try {
+            const res = await fetch('/api/campaigns/summary', {
+                headers: { 'Authorization': `Bearer ${token}` },
+            });
+
+            if (!res.ok) throw new Error('Failed to fetch summary');
+
+            const data = await res.json();
+
+            if (totalSpendEl) totalSpendEl.textContent = formatCurrency(data.total_spend);
+            if (totalRevenueEl) totalRevenueEl.textContent = formatCurrency(data.total_revenue);
+            if (overallRoasEl) overallRoasEl.textContent = data.overall_roas !== null ? `${data.overall_roas.toFixed(2)}x` : 'N/A';
+        } catch {
+            if (totalSpendEl) totalSpendEl.textContent = '—';
+            if (totalRevenueEl) totalRevenueEl.textContent = '—';
+            if (overallRoasEl) overallRoasEl.textContent = '—';
+        }
+    }
 
     async function loadCampaigns(token) {
         const loading = document.getElementById('campaigns-loading');
