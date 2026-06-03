@@ -31,7 +31,7 @@ export function initDashboard() {
             if (!file) return;
 
             if (!file.name.endsWith('.csv')) {
-                showModal('Please select a valid .csv file.');
+                showModal('Please select a valid .csv file.', 'Import Error');
                 fileInput.value = '';
                 return;
             }
@@ -50,13 +50,13 @@ export function initDashboard() {
                 const data = await res.json();
 
                 if (!res.ok) {
-                    showModal(data.message || 'Failed to import CSV.');
+                    showModal(data.message || 'Failed to import CSV.', 'Import Error');
                 } else {
                     alert(data.message);
                     loadCampaigns(token);
                 }
             } catch (err) {
-                showModal('An error occurred while importing the CSV file.');
+                showModal('An error occurred while importing the CSV file.', 'Import Error');
             } finally {
                 fileInput.value = '';
             }
@@ -201,7 +201,7 @@ export function initDashboard() {
         if (id) {
             e.preventDefault();
             if (!confirm('Are you sure you want to delete this campaign?')) return;
-            softDeleteCampaign(Number(id), token);
+            softDeleteCampaign(Number(id));
             return;
         }
 
@@ -209,34 +209,29 @@ export function initDashboard() {
         if (forceId) {
             e.preventDefault();
             if (!confirm('Are you sure you want to permanently delete this campaign? This action cannot be undone.')) return;
-            forceDeleteCampaign(Number(forceId), token);
+            forceDeleteCampaign(Number(forceId));
         }
     }
 
-    async function softDeleteCampaign(id, token) {
+    async function deleteCampaignRequest(url, errorMsg) {
         try {
-            const res = await fetch(`/api/campaigns/${id}`, {
+            const res = await fetch(url, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` },
             });
-            if (!res.ok) throw new Error('Failed to delete campaign');
+            if (!res.ok) throw new Error(errorMsg);
             loadCampaigns(token);
         } catch {
-            showModal('Failed to delete campaign. Please try again.');
+            showModal(errorMsg, 'Delete Error');
         }
     }
 
-    async function forceDeleteCampaign(id, token) {
-        try {
-            const res = await fetch(`/api/campaigns/${id}/force`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
-            if (!res.ok) throw new Error('Failed to permanently delete campaign');
-            loadCampaigns(token);
-        } catch {
-            showModal('Failed to permanently delete campaign. Please try again.');
-        }
+    function softDeleteCampaign(id) {
+        deleteCampaignRequest(`/api/campaigns/${id}`, 'Failed to delete campaign. Please try again.');
+    }
+
+    function forceDeleteCampaign(id) {
+        deleteCampaignRequest(`/api/campaigns/${id}/force`, 'Failed to permanently delete campaign. Please try again.');
     }
 
     async function loadCampaigns(token) {
@@ -299,7 +294,12 @@ export function initDashboard() {
         return div.innerHTML;
     }
 
-    function showModal(message) {
+    const modalTitle = document.getElementById('modal-title');
+
+    function showModal(message, title) {
+        if (modalTitle && title) {
+            modalTitle.textContent = title;
+        }
         if (modal && modalMessage) {
             modalMessage.textContent = message;
             modal.classList.remove('hidden');
