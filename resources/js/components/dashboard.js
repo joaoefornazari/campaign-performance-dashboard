@@ -52,6 +52,7 @@ export function initDashboard() {
                     showModal(data.message || 'Failed to import CSV.');
                 } else {
                     alert(data.message);
+                    loadCampaigns(token);
                 }
             } catch (err) {
                 showModal('An error occurred while importing the CSV file.');
