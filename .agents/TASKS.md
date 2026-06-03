@@ -172,6 +172,6 @@ Create endpoints that do the following:
 
 Create an API user login endpoint and a user logout endpoint. Login must return user's email and name. Logout must have a success message and redirect user to login page (create an empty login page too).
 
-## TASK [2026-06-03T00:54:40]: Login stress test
+## TASK [2026-06-03T00:54:40]: Login stress test [DONE]
 
 Add to `./tests/Feature/AuthTest.php` a stress test to validate Laravel rate limit applied on `/api/login` endpoint.
