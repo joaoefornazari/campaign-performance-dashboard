@@ -28,7 +28,7 @@ export class AuthController {
     tokenRecord.token = tokenHash;
     await AppDataSource.getRepository(PersonalAccessToken).save(tokenRecord);
     const token = `${tokenRecord.id}|${tokenPlain}`;
-    return res.json({ user: { name: user.name, email: user.email }, token });
+    return res.json({ user: { name: user.name, email: user.email, role: user.role }, token });
   }
 
   async logout(req: Request, res: Response) {

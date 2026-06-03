@@ -150,6 +150,12 @@ export function initDashboard() {
             }
 
             const platformName = c.platform ? c.platform.name : '—';
+            const isAdmin = user && user.role === 'admin';
+
+            const actions = `<div class="flex gap-1 justify-end">
+                <button type="button" data-delete-id="${c.id}" class="delete-btn text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                ${isAdmin ? `<button type="button" data-force-delete-id="${c.id}" class="force-delete-btn text-xs bg-gray-800 text-white px-2 py-1 rounded hover:bg-gray-900">Delete Permanently</button>` : ''}
+            </div>`;
 
             return `<tr class="${rowClass} border-b border-gray-200">
                 <td class="px-4 py-3 text-sm text-gray-800">${escapeHtml(c.name)}</td>
@@ -161,8 +167,12 @@ export function initDashboard() {
                 <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${roas !== null ? roas.toFixed(2) : 'N/A'}</td>
                 <td class="px-4 py-3 text-sm text-gray-800 text-right font-semibold">${cpa !== null ? formatCurrency(cpa) : 'N/A'}</td>
                 <td class="px-4 py-3 text-sm text-right font-semibold ${stockVariationClass(c.stock_variation)}">${formatStockVariation(c.stock_variation)}</td>
+                <td class="px-4 py-3 text-sm text-right">${actions}</td>
             </tr>`;
         }).join('');
+
+        tbody.removeEventListener('click', handleDeleteClick);
+        tbody.addEventListener('click', handleDeleteClick);
     }
 
     function applyRoasFilter() {
@@ -181,6 +191,52 @@ export function initDashboard() {
             return roas !== null && roas >= minRoas;
         });
         renderCampaigns(filtered);
+    }
+
+    function handleDeleteClick(e) {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+
+        const id = btn.getAttribute('data-delete-id');
+        if (id) {
+            e.preventDefault();
+            if (!confirm('Are you sure you want to delete this campaign?')) return;
+            softDeleteCampaign(Number(id), token);
+            return;
+        }
+
+        const forceId = btn.getAttribute('data-force-delete-id');
+        if (forceId) {
+            e.preventDefault();
+            if (!confirm('Are you sure you want to permanently delete this campaign? This action cannot be undone.')) return;
+            forceDeleteCampaign(Number(forceId), token);
+        }
+    }
+
+    async function softDeleteCampaign(id, token) {
+        try {
+            const res = await fetch(`/api/campaigns/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` },
+            });
+            if (!res.ok) throw new Error('Failed to delete campaign');
+            loadCampaigns(token);
+        } catch {
+            showModal('Failed to delete campaign. Please try again.');
+        }
+    }
+
+    async function forceDeleteCampaign(id, token) {
+        try {
+            const res = await fetch(`/api/campaigns/${id}/force`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` },
+            });
+            if (!res.ok) throw new Error('Failed to permanently delete campaign');
+            loadCampaigns(token);
+        } catch {
+            showModal('Failed to permanently delete campaign. Please try again.');
+        }
     }
 
     async function loadCampaigns(token) {

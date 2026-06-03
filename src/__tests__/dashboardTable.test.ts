@@ -22,6 +22,10 @@ function setupDom() {
       <table id="campaigns-table" class="hidden">
         <tbody id="campaigns-table-body"></tbody>
       </table>
+      <div id="modal" class="hidden">
+        <p id="modal-message"></p>
+        <button id="modal-close">Close</button>
+      </div>
     </div>
   `;
 }
@@ -116,14 +120,14 @@ describe('Dashboard table', () => {
 
     const rows = document.querySelectorAll('#campaigns-table-body tr');
 
-    expect(rows[0].children[7].textContent).toBe('+12.50%');
-    expect(rows[0].children[7].className).toContain('text-green-600');
+    expect(rows[0].children[8].textContent).toBe('+12.50%');
+    expect(rows[0].children[8].className).toContain('text-green-600');
 
-    expect(rows[1].children[7].textContent).toBe('-3.20%');
-    expect(rows[1].children[7].className).toContain('text-red-600');
+    expect(rows[1].children[8].textContent).toBe('-3.20%');
+    expect(rows[1].children[8].className).toContain('text-red-600');
 
-    expect(rows[2].children[7].textContent).toBe('N/A');
-    expect(rows[2].children[7].className).toContain('text-gray-400');
+    expect(rows[2].children[8].textContent).toBe('N/A');
+    expect(rows[2].children[8].className).toContain('text-gray-400');
   });
 
   it('shows empty message when no campaigns', async () => {
@@ -183,8 +187,8 @@ describe('Dashboard table', () => {
     });
 
     const row = document.querySelector('#campaigns-table-body tr')!;
-    expect(row.children[5].textContent).toBe('N/A');
     expect(row.children[6].textContent).toBe('N/A');
+    expect(row.children[7].textContent).toBe('N/A');
   });
 
   it('renders summary bar with total spend, revenue, and ROAS', async () => {
@@ -358,5 +362,78 @@ describe('Dashboard table', () => {
 
     const table = document.getElementById('campaigns-table');
     expect(table!.classList.contains('hidden')).toBe(true);
+  });
+
+  it('renders delete button on each campaign row', async () => {
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+
+    const deleteBtns = document.querySelectorAll('[data-delete-id]');
+    expect(deleteBtns.length).toBe(3);
+  });
+
+  it('does not render force-delete button for standard user', async () => {
+    localStorage.setItem('skyhouse_user', JSON.stringify({ name: 'Standard User', email: 'standard@test.com', role: 'standard' }));
+
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+
+    const forceDeleteBtns = document.querySelectorAll('[data-force-delete-id]');
+    expect(forceDeleteBtns.length).toBe(0);
+  });
+
+  it('renders force-delete button for admin user', async () => {
+    localStorage.setItem('skyhouse_user', JSON.stringify({ name: 'Admin User', email: 'admin@test.com', role: 'admin' }));
+
+    (global.fetch as any)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ data: MOCK_CAMPAIGNS }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ total_spend: 12800.5, total_revenue: 52330, overall_roas: 4.09 }),
+      });
+
+    const { initDashboard } = await import('../../resources/js/components/dashboard.js');
+    initDashboard();
+
+    await vi.waitFor(() => {
+      const rows = document.querySelectorAll('#campaigns-table-body tr');
+      expect(rows.length).toBe(3);
+    });
+
+    const forceDeleteBtns = document.querySelectorAll('[data-force-delete-id]');
+    expect(forceDeleteBtns.length).toBe(3);
   });
 });
